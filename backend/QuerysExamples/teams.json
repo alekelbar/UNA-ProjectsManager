@@ -1,0 +1,30 @@
+{
+  "data": {
+    "getTeams": [
+      {
+        "groupName": "Grupo dedicaco a jugar uno en la hora de la tarde",
+        "participants": [
+          { "participant": "625a0c2ba816a91a0234ff1b" },
+          { "participant": "625a0ccfa816a91a0234ff31" },
+          { "participant": "625a0cb5a816a91a0234ff2c" }
+        ],
+        "objectives": [
+          {
+            "purpose": "¡Pasar el rato!",
+            "description": "Vamos a jugar uno entre 11 y 1pm para pasar el rato mientras entramos a clase... :)"
+          }
+        ],
+        "activity": {
+          "description": "Un juego de mesa",
+          "tags": ["uno", "perder amigos :v", "ver el mundo arder :v"]
+        },
+        "resources": {
+          "description": "Se requieren recursos para poder jugar(un jueguito)",
+          "humanResources": "Gente que sepa jugar UNO",
+          "technology": { "isRequired": false, "description": "" },
+          "physicists": { "isRequired": true, "description": "Las cartitas" }
+        }
+      }
+    ]
+  }
+}

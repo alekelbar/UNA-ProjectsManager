@@ -1,0 +1,97 @@
+{
+  "data": {
+    "getPeople": [
+      {
+        "role": ["ACADEMIC", "ADMINISTRATIVE"],
+        "name": "Juan",
+        "lastName": "Gamboa",
+        "dateOfBirth": "1643868000000",
+        "nationality": "Costarricense",
+        "address": {
+          "city": "C. PZ",
+          "village": "Un publito de pz",
+          "description": "Esto sería la descripción de su casita..."
+        },
+        "professional": {
+          "occupation": ["Profesor", "Desarrollador"],
+          "EntryDate": "05/03/22"
+        },
+        "contact": {
+          "phones": ["5555555", "88888888"],
+          "email": "juan.gamboa@est.una.ac.cr"
+        }
+      },
+      {
+        "role": ["ACADEMIC"],
+        "name": "Hairol",
+        "lastName": "Romero",
+        "dateOfBirth": "920700000000",
+        "nationality": "Costarricense",
+        "address": {
+          "city": "C. PZ",
+          "village": "Un publito de pz",
+          "description": "Esto sería la descripción de su casita..."
+        },
+        "professional": {
+          "occupation": ["Profesor", "administrador de TI"],
+          "EntryDate": "05/03/2000"
+        },
+        "contact": {
+          "phones": ["20202020", "88888888"],
+          "email": "Hairol.Romero@est.una.ac.cr"
+        }
+      },
+      {
+        "role": ["STUDENT"],
+        "name": "Ariany",
+        "lastName": "Rosales",
+        "dateOfBirth": "950248800000",
+        "nationality": "Costarricense",
+        "address": {
+          "city": "C. Neily",
+          "village": "C. Neily",
+          "description": "Esto sería la descripción de su casita..."
+        },
+        "professional": null,
+        "contact": {
+          "phones": ["2022-2020", "+506 1212-1212"],
+          "email": "Ary.developer@gmail.com"
+        }
+      },
+      {
+        "role": ["STUDENT"],
+        "name": "Alexander",
+        "lastName": "Barquero",
+        "dateOfBirth": "950248800000",
+        "nationality": "Costarricense",
+        "address": {
+          "city": "C. La Cuesta",
+          "village": "C. La Cuesta",
+          "description": "Esto sería la descripción de su casita..."
+        },
+        "professional": null,
+        "contact": {
+          "phones": ["2022-2020", "+506 1212-1212"],
+          "email": "alekelbar.developer@gmail.com"
+        }
+      },
+      {
+        "role": ["STUDENT"],
+        "name": "Edward",
+        "lastName": "Córtez",
+        "dateOfBirth": "950248800000",
+        "nationality": "Costarricense",
+        "address": {
+          "city": "C. Golfito",
+          "village": "C. Golfito",
+          "description": "Esto sería la descripción de su casita..."
+        },
+        "professional": null,
+        "contact": {
+          "phones": ["2022-2020", "+506 1212-1212"],
+          "email": "Ed.developer@gmail.com"
+        }
+      }
+    ]
+  }
+}
