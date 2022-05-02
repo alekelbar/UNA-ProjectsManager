@@ -7,6 +7,7 @@ const typeDefs = gql`
     report: String
     project: ID
     managers: managersSchema
+    grade: Int
   }
 
   type managersSchema {
@@ -23,6 +24,7 @@ const typeDefs = gql`
     report: String!
     project: ID!
     managers: inputManagersSchema!
+    grade: Int!
   }
 
   #Teams --------------------------------------------------------------------

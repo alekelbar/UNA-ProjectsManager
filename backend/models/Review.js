@@ -25,6 +25,10 @@ const reviewSchema = mongoose.Schema({
     type: managersSchema,
     required: true,
   },
+  grade: {
+    type: Number,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Review", reviewSchema);
