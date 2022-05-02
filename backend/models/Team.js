@@ -27,7 +27,8 @@ const teamSchema = mongoose.Schema({
     required: true,
   },
   activity: {
-    type: activitySchema,
+    type: Array,
+    of: activitySchema,
     required: true,
   },
   resources: {

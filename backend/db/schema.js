@@ -33,7 +33,7 @@ const typeDefs = gql`
     groupName: String
     participants: [Participant]
     objectives: [objectiveSchema]
-    activity: Activity
+    activity: [Activity]
     resources: ResourcesSchema
   }
 

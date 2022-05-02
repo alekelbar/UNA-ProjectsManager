@@ -1,14 +1,13 @@
 {
   "data": {
-    "getReviews": [
-      {
-        "report": "Aca iría el reporte del proyecto involucrado",
-        "project": "625a0e02a816a91a0234ff55",
-        "managers": {
-          "firstPerson": "625a0ccfa816a91a0234ff31",
-          "secondPerson": "625a0cb5a816a91a0234ff2c"
-        }
-      }
-    ]
+    "createReview": {
+      "report": "Aca iría el reporte del equipo involucrado",
+      "project": "625a0e02a816a91a0234ff55",
+      "managers": {
+        "firstPerson": "625a0ccfa816a91a0234ff31",
+        "secondPerson": "625a0cb5a816a91a0234ff2c"
+      },
+      "grade": 10
+    }
   }
 }
