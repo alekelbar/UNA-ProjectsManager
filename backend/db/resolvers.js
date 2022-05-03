@@ -2,6 +2,7 @@ const Person = require("../models/Person");
 const { Project } = require("../models/Project");
 const { Team } = require("../models/Team");
 const Review = require("../models/Review");
+const Appendix = require("../models/Appendix");
 
 const resolvers = {
   Query: {
@@ -68,6 +69,15 @@ const resolvers = {
       try {
         const review = new Review(input);
         return await review.save(); // save to database
+      } catch (e) {
+        console.warn("An error occurred while saving", e);
+      }
+    },
+    createAppendix: async (_, { input }) => {
+      try {
+        console.log(input);
+        const appendix = new Appendix(input);
+        return await appendix.save(); // save to database
       } catch (e) {
         console.warn("An error occurred while saving", e);
       }

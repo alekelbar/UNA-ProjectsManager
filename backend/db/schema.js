@@ -1,6 +1,20 @@
 const { gql } = require("apollo-server");
 
 const typeDefs = gql`
+  #Appendix --------------------------------------------------------------------
+  #Appendix definition
+  type Appendix {
+    description: String
+    owner: ID
+    dataUrl: String
+  }
+
+  input AppendixInput {
+    description: String!
+    owner: ID!
+    dataUrl: String!
+  }
+
   #Reviews --------------------------------------------------------------------
   #Review definition
   type Review {
@@ -255,6 +269,8 @@ const typeDefs = gql`
     createTeam(input: teamInput): Team
     #Reviews
     createReview(input: inputReview): Review
+    #Appendix
+    createAppendix(input: AppendixInput): Appendix
   }
 `;
 
