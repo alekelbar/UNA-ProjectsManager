@@ -3,6 +3,7 @@ Simple projects manager
 
 ```
   git clone https://github.com/alekelbar/UNA-ProjectsManager.git
+  cd UNA-ProjectsManager
   git pull origin master
   npm install 
   
