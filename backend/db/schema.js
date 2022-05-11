@@ -209,64 +209,101 @@ const typeDefs = gql `
 
   #People ----------------------------------------------------------------------
   #person definition
-
+  "This makes it possible to add a person."
   type Person {
+    "The person's role."
     role: [Role] #One person can get multiple roles on my app
+    "The person's name."
     name: String
+    "The person's last name."
     lastName: String
+    "The person's date of birth."
     dateOfBirth: String
     # Age: Number; I can get it from the date of birth
+    "The person's nationality."
     nationality: String
+    "The person's address."
     address: Address
+    "This refers to the person's professional information."
     professional: ProfessionalInformation
+    "This refers to the person's contact information."
     contact: ContactInformation
   }
-
+  
+  "This makes it possible to add professional information to the person."
   type ProfessionalInformation {
+    "The person's occupation."
     occupation: [String] #if you have multiple professions
+    "The person's date of entry."
     EntryDate: String
     # yearsOfExp: String; I can calculate from the entry date
   }
-
+  
+  "This makes it possible to add contact information to the person."
   type ContactInformation {
+    "The person's phone numbers."
     phones: [String]
+    "The person's e-mail address."
     email: String
   }
-
+  
   #Address type
+  "This makes it possible to add an address to the person."
   type Address {
+    "The person's city."
     city: String
+    "The person's village."
     village: String
+    "Description of the person's address."
     description: String
   }
 
-  #people mutations
+  #people 
+  "INPUT: this makes it possible to add a person."
   input personInput {
+    "INPUT: the person's role."
     role: [Role]! #One person can get multiple roles on my app
+    "INPUT: the person's name."
     name: String!
+    "INPUT: the person's last name."
     lastName: String!
+    "INPUT: the person's date of birth."
     dateOfBirth: String!
     # Age: Number; I can get it from the date of birth
+    "INPUT: the person's nationality."
     nationality: String!
+    "INPUT: the person's address."
     address: addressInput!
+    "INPUT: this refers to the person's professional information."
     professional: inputProfessionalInformation #It's optional because if it's a student, don't need to have this information
+    "INPUT: this refers to the person's contact information."
     contact: inputContactInformation!
   }
-
+  
+  "INPUT: this makes it possible to add professional information to the person."
   input inputProfessionalInformation {
+    "INPUT: the person's occupation."
     occupation: [String]!
+    "INPUT: the person's date of entry."
     EntryDate: String!
     # yearsOfExp: String; I can calculate from the entry date
   }
-
+  
+  "INPUT: this makes it possible to add professional contact to the person."
   input inputContactInformation {
+    "INPUT: the person's phone numbers."
     phones: [String]!
+    "INPUT: the person's e-mail address."
     email: String!
   }
-
+  
+  "INPUT: this makes it possible to add an address to the person."
   input addressInput {
+    "INPUT: the person's city."
     city: String!
+    "INPUT: the person's village."
     village: String!
+    "INPUT: description of the person's address."
     description: String
   }
 
