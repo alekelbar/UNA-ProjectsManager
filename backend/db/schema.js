@@ -3,7 +3,7 @@ const { gql } = require("apollo-server");
 const typeDefs = gql`
   #Appendix --------------------------------------------------------------------
   #Appendix definition
-  
+
   type Appendix {
     description: String
     owner: ID
