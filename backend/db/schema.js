@@ -1,10 +1,19 @@
 const { gql } = require("apollo-server");
 
 const typeDefs = gql`
+  "available roles"
+  enum Role {
+    STUDENT
+    ACADEMIC
+    ADMINISTRATIVE
+  }
+
   #Appendix --------------------------------------------------------------------
   #Appendix definition
 
+  "This makes it possible to represent an attachment"
   type Appendix {
+    "This is the description of an attachment"
     description: String
     owner: ID
     dataUrl: String
@@ -192,13 +201,6 @@ const typeDefs = gql`
     address: Address
     professional: ProfessionalInformation
     contact: ContactInformation
-  }
-
-  # available roles
-  enum Role {
-    STUDENT
-    ACADEMIC
-    ADMINISTRATIVE
   }
 
   type ProfessionalInformation {
