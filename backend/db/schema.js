@@ -1,6 +1,6 @@
 const { gql } = require("apollo-server");
 
-const typeDefs = gql`
+const typeDefs = gql `
   "available roles"
   enum Role {
     STUDENT
@@ -15,39 +15,58 @@ const typeDefs = gql`
   type Appendix {
     "This is the description of an attachment"
     description: String
+    "This is the owner of the appendix"
     owner: ID
+    "This is the URL of the attachment"
     dataUrl: String
   }
-
+  "INPUT: This makes it possible to represent an attachment "
   input AppendixInput {
+    "INPUT: This is the description of an attachment"
     description: String!
+    "INPUT: This is the owner of the appendix"
     owner: ID!
+    "INPUT: This is the URL of the attachment"
     dataUrl: String!
   }
 
   #Reviews --------------------------------------------------------------------
   #Review definition
+  "This identifies the type of review"
   type Review {
+    "This would be a description of the review"
     report: String
+    "Identifier of the project to be evaluated"
     project: ID
+    "Identify of the person in charge of the review"
     managers: managersSchema
+    "This would be the qualification"
     grade: Int
   }
 
+  "Type of qualifier"
   type managersSchema {
+    "First qualifier identifier "
     firstPerson: ID
+    "Second qualifier identifier "
     secondPerson: ID
   }
-
+  "INPUT: Type of qualifier"
   input inputManagersSchema {
+    "INPUT: First qualifier identifier"
     firstPerson: ID!
+    "INPUT: Second qualifier identifier"
     secondPerson: ID!
   }
-
+  "INPUT: This identifies the type of review"
   input inputReview {
+    "INPUT:This would be a description of the review"
     report: String!
+    "INPUT:Identifier of the project to be evaluated"
     project: ID!
+    "INPUT: Identify of the person in charge of the review"
     managers: inputManagersSchema!
+    "INPUT: This would be the qualification"
     grade: Int!
   }
 
