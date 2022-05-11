@@ -1,6 +1,8 @@
 # UNA-ProjectsManager
 Simple projects manager
 
+NOTA: Lo relacionado a git se hace fuera de la carpeta backend, lo demás(npm) dentro.
+
 ```
   git clone https://github.com/alekelbar/UNA-ProjectsManager.git
   cd UNA-ProjectsManager
