@@ -3,6 +3,7 @@ const { gql } = require("apollo-server");
 const typeDefs = gql`
   #Appendix --------------------------------------------------------------------
   #Appendix definition
+  
   type Appendix {
     description: String
     owner: ID
@@ -250,27 +251,86 @@ const typeDefs = gql`
 
   type Query {
     #People ----------------------------------------------------------------------
-    getPerson(id: ID!): Person
+
+    "Allows to obtain a list of registered persons"
     getPeople: [Person]
+    "Allows to obtain a person from its unique identifier."
+    getPerson(id: ID!): Person
+
     #projects
+
+    "Allows to obtain a list of registered projects"
     getProjects: [Project]
+    "Allows to obtain a project from its unique identifier."
+    getProject(id: ID!): Project
+
     #Teams
+
+    "Allows to obtain a list of registered equipment"
     getTeams: [Team]
+    "Allows to obtain a device from its unique identifier."
+    getTeam(id: ID!): Team
+
     #Reviews
+
+    "Allows to obtain a list of registered revisions"
     getReviews: [Review]
+    "Allows you to obtain a revision from your unique identifier."
+    getReview(id: ID!): Review
+
+    #Appendix
+
+    "Allows to obtain a list of registered attachments"
+    getAppendixs: [Appendix]
+    "Allows you to obtain an attachment from your unique identifier."
+    getAppendix(id: ID!): Appendix
   }
 
   type Mutation {
     #People
+
+    "Allows registration of persons"
     createPerson(input: personInput): Person
+    "Allows you to update people"
+    updatePerson(id: ID!, input: personInput): Person
+    "Allows you to remove people"
+    deletePerson(id: ID!): String
+
     #projects
+
+    "Allows you to create projects"
     createProject(input: projectInput): Project
+    "Allows you to update projects"
+    updateProject(id: ID!, input: projectInput): Project
+    "Allows deletion of projects"
+    deleteProject(id: ID!): String
+
     #Teams
+
+    "Allows you to create teams"
     createTeam(input: teamInput): Team
+    "Enables equipment upgrades"
+    updateTeam(id: ID!, input: teamInput): Team
+    "Allows you to remove equipment"
+    deleteTeam(id: ID!): String
+
     #Reviews
+
+    "Allows you to create revisions"
     createReview(input: inputReview): Review
+    "Allows you to update revisions"
+    updateReview(id: ID!, input: inputReview): Review
+    "Allows deletion of revisions"
+    deleteReview(id: ID!): String
+
     #Appendix
+
+    "Allows you to create revisions"
     createAppendix(input: AppendixInput): Appendix
+    "Allows you to update revisions"
+    updateAppendix(id: ID!, input: AppendixInput): Appendix
+    "Allows deletion of revisions"
+    deleteAppendix(id: ID!): String
   }
 `;
 
