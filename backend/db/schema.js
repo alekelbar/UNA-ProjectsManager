@@ -72,138 +72,205 @@ const typeDefs = gql `
 
   #Teams --------------------------------------------------------------------
   #Team definition
+   "This identifies the type of team"
   type Team {
+  "This is the name of the team"
     groupName: String
+    "These are the participants of the team"
     participants: [Participant]
+    "These are the objetives of the team"
     objectives: [objectiveSchema]
+    "This is the activity of the team"
     activity: [Activity]
+    "This is the resources of the team"
     resources: ResourcesSchema
   }
-
+  "This identifies the type of the Resources schema"
   type ResourcesSchema {
+  "This is the description of  the resources schema"
     description: String
+    "This is the human resources of theresources schema"
     humanResources: String
+    "This is the technology of the resources schema"
     technology: Technology
+    "This is the physicists of the resources schema"
     physicists: Physicists
   }
-
+  "This identifies the type of the technology"
   type Technology {
+  "Returns true or false if the technology is required"
     isRequired: Boolean
+    "This is the description of the technology"
     description: String
   }
-
+ "This identifies the type of the Physicists"
   type Physicists {
+  "Returns true or false if the Physicists is required"
     isRequired: Boolean
+     "This is the description of the Physicists"
     description: String
   }
-
+ "This identifies the type of the Activity"
   type Activity {
+   "This is the description of the Activity"
     description: String
+    "This is tags of the Activity"
     tags: [String]
   }
-
+ "INPUT: This identifies the type of team"
   input teamInput {
+    "INPUT: This is the name of the team"
     groupName: String!
+    "INPUT: These are the participants of the team"
     participants: [inputParticipant]!
     objectives: [inputObjectiveSchema]!
+     "INPUT:This is the activity of the team"
     activity: inputActivity!
     active: Boolean
+    "INPUT: This is the resources of the team"
     resources: inputResourcesSchema
   }
-
+ "INPUT: This identifies the type of the Resources schema"
   input inputResourcesSchema {
+    "INPUT : This is the description of the resources schema"
     description: String!
+      "INPUT: This is the human resources of  the resources schema"
     humanResources: String!
+     "INPUT: This is the technology of the resources schema"
     technology: inputTechnology
+     "INPUT:This is the physicists of the resources schema"
     physicists: inputPhysicists
   }
-
+"INPUT:This identifies the type of the technology"
   input inputTechnology {
+  "INPUT:Returns true or false if the technology is required"
     isRequired: Boolean
+     "INPUT: This is the description of the technology"
     description: String
   }
-
+ "INPUT:This identifies the type of the Physicists"
   input inputPhysicists {
+  "INPUT:Returns true or false if the Physicists is required"
     isRequired: Boolean
+    "INPUT:This is the description of the Physicists"
     description: String
   }
-
+ "INPUT:This identifies the type of the Activity"
   input inputActivity {
+   "INPUT:This is the description of the Activity"
     description: String!
+      "INPUT:This is tags of the Activity"
     tags: [String]
   }
 
   #Projects --------------------------------------------------------------------
   #project definition
+  "This identifies the type of the project"
   type Project {
+  "This is the name of the project"
     projectName: String
+    "These are the disciplinary areas of the project"
     disciplinaryAreas: DisciplinaryAreas
+    "These are the objetives of project"
     objectives: [objectiveSchema]
+    "Identifier the responsible of the project"
     responsible: ID
+    "These are participants of the project"
     participants: [Participant]
+    "This is the effect of the project" 
     effect: projectEffect
+    "This is the resources of the project"
     resources: ResourcesSchema
+    "This is the budget of the project"
     budget: budgetSchema
   }
-
+ "This identifies the type of budget schema"
   type budgetSchema {
+  "This is the description of the budget schema"
     description: String
+    "This is the amount of the budget schema"
     Amount: Float
   }
-
+"This identifies the type of the  project Effect"
   type projectEffect {
+  "This is when the effect of the project starts"
     start: String
+    "This is when the effect of the project ends"
     end: String
   }
-
+"This identifies the type of the  participants"
   type Participant {
+   "Identifier of the participant"
     participant: ID
   }
-
+"This identifies the type of the  objective Schema"
   type objectiveSchema {
+  "This is the purpose of the objetive schema"
     purpose: String
+    "This is the description of the objetive schema"
     description: String
   }
-
+"This identifies the type of the  disciplinary areas"
   type DisciplinaryAreas {
+  "These are the areas of the disciplinary areas"
     areas: [String]
+   " Returns true or false if the Multidisciplinary is required"
     isMultidisciplinary: Boolean
+    " Returns true or false if the Interdisciplinary is required"
     isInterdisciplinary: Boolean
   }
-
+ "INPUT:This identifies the type of the project"
   input projectInput {
-    projectName: String!
+   "INPUT:This is the name of the project"
+    projectName: String! 
+    "INPUT:These are the disciplinary areas of the project"
     disciplinaryAreas: inputDisciplinaryAreas!
+      "INPUT:These are the objetives of project"
     objectives: [inputObjectiveSchema]!
+     "INPUT:Identifier the responsible of the project"
     responsible: ID!
+     "INPUT:These are participants of the project"
     participants: [inputParticipant!]
+      "INPUT:This is the effect of the project" 
     effect: inputProjectEffect!
+     "INPUT:This is the resources of the project"
     resources: inputResourcesSchema!
+      "INPUT:This is the budget of the project"
     budget: inputBudgetSchema!
   }
-
+ "INPUT:This identifies the type of budget schema"
   input inputBudgetSchema {
+    "INPUT:This is the description of the budget schema"
     description: String!
+     "INPUT:This is the amount of the budget schema"
     Amount: Float!
   }
-
+"INPUT:This identifies the type of project Effect"
   input inputProjectEffect {
+    "INPUT:This is when the effect of the project starts"
     start: String
+      "INPUT:This is when the effect of the project ends"
     end: String
   }
-
+"INPUT:This identifies the type of the  participants"
   input inputParticipant {
+    "INPUT:Identifier of the participant"
     participant: ID
   }
-
+"INPUT:This identifies the type of the  objective Schema"
   input inputObjectiveSchema {
+   "INPUT:This is the purpose of the objetive schema"
     purpose: String!
+   "INPUT:This is the description of the objetive schema"
     description: String!
   }
-
+"INPUT:This identifies the type of the  disciplinary areas"
   input inputDisciplinaryAreas {
+   "INPUT:These are the areas of the disciplinary areas"
     areas: [String!]!
+     "INPUT: Returns true or false if the Multidisciplinary is required"
     isMultidisciplinary: Boolean!
+     "INPUT: Returns true or false if the Interdisciplinary is required"
     isInterdisciplinary: Boolean!
   }
 
