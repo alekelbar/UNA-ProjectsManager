@@ -12,6 +12,15 @@ const managersSchema = mongoose.Schema({
 });
 
 const reviewSchema = mongoose.Schema({
+
+  admin: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "user",
+    require: true
+
+  },
+
   report: {
     type: String,
     required: true,

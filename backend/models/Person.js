@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 //subSchema
 const AddressSchema = mongoose.Schema({
+
   city: {
     type: String,
     trim: true,
@@ -42,6 +43,14 @@ const ContactInformation = mongoose.Schema({
 });
 
 const PersonSchema = mongoose.Schema({
+
+  admin: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "user",
+    require: true
+  },
+
   name: {
     type: String,
     trim: true,

@@ -1,6 +1,6 @@
 const { gql } = require("apollo-server");
 
-const typeDefs = gql `
+const typeDefs = gql`
   "available roles"
   enum Role {
     STUDENT
@@ -8,6 +8,34 @@ const typeDefs = gql `
     ADMINISTRATIVE
   }
 
+  #token --------------------------------------------------------------------
+  #token definition
+
+  type Token {
+    token: String
+  }
+
+  #user --------------------------------------------------------------------
+  #user definition
+  type User {
+    id: ID
+    name: String,
+    lastname: String,
+    email: String,
+    created: String
+  }
+
+  input UserInput {
+    name: String!,
+    lastname: String!,
+    email: String!,
+    password: String!
+  }
+
+  input AuthUser_input {
+    email: String!,
+    password: String!
+  }
   #Appendix --------------------------------------------------------------------
   #Appendix definition
 
@@ -19,6 +47,8 @@ const typeDefs = gql `
     owner: ID
     "This is the URL of the attachment"
     dataUrl: String
+
+    admin: ID
   }
   "INPUT: This makes it possible to represent an attachment "
   input AppendixInput {
@@ -28,6 +58,7 @@ const typeDefs = gql `
     owner: ID!
     "INPUT: This is the URL of the attachment"
     dataUrl: String!
+    
   }
 
   #Reviews --------------------------------------------------------------------
@@ -42,6 +73,8 @@ const typeDefs = gql `
     managers: managersSchema
     "This would be the qualification"
     grade: Int
+
+    admin: ID
   }
 
   "Type of qualifier"
@@ -183,6 +216,8 @@ const typeDefs = gql `
     resources: ResourcesSchema
     "This is the budget of the project"
     budget: budgetSchema
+
+    admin: ID
   }
  "This identifies the type of budget schema"
   type budgetSchema {
@@ -295,6 +330,8 @@ const typeDefs = gql `
     professional: ProfessionalInformation
     "This refers to the person's contact information."
     contact: ContactInformation
+
+    admin: ID
   }
   
   "This makes it possible to add professional information to the person."
@@ -411,7 +448,13 @@ const typeDefs = gql `
     getAppendix(id: ID!): Appendix
   }
 
+
   type Mutation {
+    #User
+    createUser(input: UserInput): User
+    AuthUser(input: AuthUser_input): Token
+    getUser(token: String!): User
+    
     #People
 
     "Allows registration of persons"

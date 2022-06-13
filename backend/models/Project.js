@@ -62,6 +62,14 @@ const budgetSchema = mongoose.Schema({
 });
 
 const projectSchema = mongoose.Schema({
+
+  admin: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "user",
+    require: true
+  },
+
   projectName: {
     type: String,
     unique: true,

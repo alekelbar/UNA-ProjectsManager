@@ -11,6 +11,14 @@ const activitySchema = mongoose.Schema({
 });
 
 const teamSchema = mongoose.Schema({
+
+  admin: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "user",
+    require: true
+  },
+
   groupName: {
     type: String,
     required: true,

@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 
 const Appendix = mongoose.Schema({
+
+  admin: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "user",
+    require: true
+  },
+
   description: {
     type: String,
     required: true,
