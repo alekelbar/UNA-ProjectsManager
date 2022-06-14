@@ -1,8 +1,8 @@
-import React from 'react'
-import Head from 'next/head'
-import Sidebar from './Sidebar'
+import React from "react";
+import Head from "next/head";
+import Sidebar from "./Sidebar";
 
-const Layout = ({children}) => {
+const Layout = ({ children }) => {
   return (
     <>
       <Head>
@@ -26,12 +26,15 @@ const Layout = ({children}) => {
         />
         <script src="https://cdn.tailwindcss.com"></script>
       </Head>
-      <div className='flex justify-start space-x-2 bg-slate-400 min-h-screen' style={{fontFamily: 'Lato'}}>
-        <Sidebar/>
+      <div
+        className="flex space-x-2 bg-slate-400 min-h-screen w-screen"
+        style={{ fontFamily: "Lato" }}
+      >
+        <Sidebar />
         {children}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
