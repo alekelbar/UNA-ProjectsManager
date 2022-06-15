@@ -1,8 +1,12 @@
 import React from "react";
 import Head from "next/head";
 import Sidebar from "./Sidebar";
+import { useRouter } from "next/router";
+
 
 const Layout = ({ children }) => {
+
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -26,13 +30,27 @@ const Layout = ({ children }) => {
         />
         <script src="https://cdn.tailwindcss.com"></script>
       </Head>
-      <div
-        className="flex space-x-2 bg-slate-400 min-h-screen w-screen"
-        style={{ fontFamily: "Lato" }}
-      >
-        <Sidebar />
-        {children}
-      </div>
+
+      {
+        router.pathname === '/login' || router.pathname === '/addUser' ?
+          (
+            <div
+              className="bg-gray-800 min-h-screen flex flex-col justify-center"
+              style={{ fontFamily: "Lato" }}
+            >
+              {children}
+            </div>
+          ) :
+          (<div
+            className="flex space-x-2 bg-slate-400 min-h-screen w-screen"
+            style={{ fontFamily: "Lato" }}
+          >
+            <Sidebar />
+            {children}
+          </div>)
+
+      }
+
     </>
   );
 };
