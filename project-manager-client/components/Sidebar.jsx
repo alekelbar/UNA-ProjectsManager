@@ -10,7 +10,7 @@ const Sidebar = () => {
     <aside className="bg-gray-800 sm:min-h-screen sm:w-1/5 xl:w-12/2">
       <div className="text-xl font-bold text-center text-white p-5">
         <Link href="/">
-          <a className="block mb-1 hover:bg-slate-500 transition-all p-3 bg-slate-700 rounded">
+          <a className="block hover:bg-slate-500 transition-all p-3 bg-slate-700 rounded">
             PROJECT MANAGER
           </a>
         </Link>
@@ -20,8 +20,8 @@ const Sidebar = () => {
         <li
           className={
             router.pathname === "/people"
-              ? "block mb-1 bg-slate-500 m-2 p-2 transition-all text-sm"
-              : "block mb-1 hover:bg-slate-200 hover:text-black m-2 p-2 transition-all text-sm rounded"
+              ? "block bg-slate-500 mx-5 transition-all text-sm"
+              : "block hover:bg-slate-200 hover:text-black mx-5 transition-all text-sm rounded"
           }
         >
           <Link href="/people">
@@ -31,8 +31,8 @@ const Sidebar = () => {
         <li
           className={
             router.pathname === "/teams"
-              ? "block mb-1 bg-slate-500 m-2 p-2 transition-all text-sm"
-              : "block mb-1 hover:bg-slate-200 hover:text-black m-2 p-2 transition-all text-sm rounded"
+              ? "block bg-slate-500 mx-5 transition-all text-sm"
+              : "block hover:bg-slate-200 hover:text-black mx-5 transition-all text-sm rounded"
           }
         >
           <Link href="/teams">
@@ -42,8 +42,8 @@ const Sidebar = () => {
         <li
           className={
             router.pathname === "/projects"
-              ? "block mb-1 bg-slate-500 m-2 p-2 transition-all text-sm"
-              : "block mb-1 hover:bg-slate-200 hover:text-black m-2 p-2 transition-all text-sm rounded"
+              ? "block bg-slate-500 mx-5 transition-all text-sm"
+              : "block hover:bg-slate-200 hover:text-black mx-5 transition-all text-sm rounded"
           }
         >
           <Link href="/projects">
@@ -53,8 +53,8 @@ const Sidebar = () => {
         <li
           className={
             router.pathname === "/reviews"
-              ? "block mb-1 bg-slate-500 m-2 p-2 transition-all text-sm"
-              : "block mb-1 hover:bg-slate-200 hover:text-black m-2 p-2 transition-all text-sm rounded"
+              ? "block bg-slate-500 mx-5 transition-all text-sm"
+              : "block hover:bg-slate-200 hover:text-black mx-5 transition-all text-sm rounded"
           }
         >
           <Link href="/reviews">
@@ -64,8 +64,8 @@ const Sidebar = () => {
         <li
           className={
             router.pathname === "/appendix"
-              ? "block mb-1 bg-slate-500 m-2 p-2 transition-all text-sm"
-              : "block mb-1 hover:bg-slate-200 hover:text-black m-2 p-2 transition-all text-sm rounded"
+              ? "block bg-slate-500 mx-5 transition-all text-sm"
+              : "block hover:bg-slate-200 hover:text-black mx-5 transition-all text-sm rounded"
           }
         >
           <Link href="/appendix">

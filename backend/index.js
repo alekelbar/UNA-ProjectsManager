@@ -19,7 +19,6 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 //Database connection
 const connectDataBase = require("./config/db");
-debugger;
 connectDataBase();
 
 //My server...
@@ -30,13 +29,14 @@ const server = new ApolloServer({
     const token = req.headers['authorization'] || '';
     if (token) {
       try {
-        const user = jwt.verify(token, process.env.SECRETO);
+        const user = jwt.verify(token.replace('Bearer ', ''), process.env.SECRETO);
+        console.log(user)
         return {
           user
         }
       } catch (error) {
         console.log('Error...');
-        console.log(error);
+        console.log(error)
       }
     }
   }

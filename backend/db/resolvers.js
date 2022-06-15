@@ -70,7 +70,8 @@ const resolvers = {
       if (!userExist) throw new Error('That user not found');
 
       // cheack password
-      const correctPassword = bcryptjs.compare(password, userExist.password);
+      const correctPassword = await bcryptjs.compare(password, userExist.password);
+
       if (!correctPassword) throw new Error('That password has not correctly');
 
       // crear un token
