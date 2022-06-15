@@ -44,7 +44,7 @@ const login = () => {
         console.log(data)
         localStorage.setItem('token', token);
 
-        setMessage('Auth was correctly')
+        setMessage('Auth in progress...')
         setTimeout(() => {
           router.push('/');
         }, 1500);

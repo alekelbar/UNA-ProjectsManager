@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 import Sidebar from "./Sidebar";
 import { useRouter } from "next/router";
+import Header from "./Header";
 
 
 const Layout = ({ children }) => {
@@ -35,18 +36,21 @@ const Layout = ({ children }) => {
         router.pathname === '/login' || router.pathname === '/addUser' ?
           (
             <div
-              className="bg-gray-800 min-h-screen flex flex-col justify-center"
+              className="bg-[#222831] min-h-screen flex flex-col justify-center"
               style={{ fontFamily: "Lato" }}
             >
               {children}
             </div>
           ) :
           (<div
-            className="flex space-x-2 bg-slate-400 min-h-screen w-screen"
+            className="flex space-x-2 bg-sky-100 text-black min-h-screen w-screen"
             style={{ fontFamily: "Lato" }}
           >
             <Sidebar />
-            {children}
+            <main className="sm:w-2/3 xl:w-4/5 sm:min-h-screen p-5">
+              <Header />
+              {children}
+            </main>
           </div>)
 
       }

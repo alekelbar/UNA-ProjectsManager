@@ -313,6 +313,7 @@ const typeDefs = gql`
   #person definition
   "This makes it possible to add a person."
   type Person {
+    id: ID
     "The person's role."
     role: [Role] #One person can get multiple roles on my app
     "The person's name."
@@ -419,6 +420,8 @@ const typeDefs = gql`
     "Allows to obtain a person from its unique identifier."
     getPerson(id: ID!): Person
 
+    getUser: User
+
     #projects
 
     "Allows to obtain a list of registered projects"
@@ -453,7 +456,6 @@ const typeDefs = gql`
     #User
     createUser(input: UserInput): User
     AuthUser(input: AuthUser_input): Token
-    getUser(token: String!): User
     
     #People
 

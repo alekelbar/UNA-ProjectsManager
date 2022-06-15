@@ -48,18 +48,26 @@ const resolvers = {
       if (!appendix) throw new Error("It does not exist or does not have permissions on it.");
       return appendix;
     },
-    getAppendixs: async () => await Appendix.find({}),
-    getPeople: async () => await Person.find({}),
-    getProjects: async () => await Project.find({}),
-    getTeams: async () => await Team.find({}),
-    getReviews: async () => await Review.find({}),
+    getAppendixs: async (_, __, ctx) => {
+      return await Appendix.find({ admin: ctx.user.id })
+    },
+    getPeople: async (_, __, ctx) => {
+      return await Person.find({ admin: ctx.user.id })
+    },
+    getProjects: async (_, __, ctx) => {
+      return await Project.find({ admin: ctx.user.id })
+    },
+    getTeams: async (_, __, ctx) => {
+      return await Team.find({ admin: ctx.user.id })
+    },
+    getReviews: async (_, __, ctx) => {
+      return await Review.find({ admin: ctx.user.id });
+    },
+    getUser: async (_, { }, ctx) => {
+      return ctx.user;
+    },
   },
   Mutation: {
-
-    getUser: async (_, { token }) => {
-      const userid = jwt.verify(token, process.env.SECRETO);
-      return userid;
-    },
 
     AuthUser: async (_, { input }) => {
       const { email, password } = input;
@@ -191,7 +199,6 @@ const resolvers = {
     },
     createAppendix: async (_, { input }, ctx) => {
       try {
-        console.log(input);
         input.admin = ctx.user.id;
         const appendix = new Appendix(input);
         return await appendix.save(); // save to database

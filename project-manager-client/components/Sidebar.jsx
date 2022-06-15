@@ -7,7 +7,7 @@ const Sidebar = () => {
   const router = useRouter();
 
   return (
-    <aside className="bg-gray-800 sm:min-h-screen sm:w-1/5 xl:w-12/2">
+    <aside className="bg-[#222831] sm:min-h-screen sm:w-1/5 xl:w-12/2">
       <div className="text-xl font-bold text-center text-white p-5">
         <Link href="/">
           <a className="block hover:bg-slate-500 transition-all p-3 bg-slate-700 rounded">
@@ -19,12 +19,12 @@ const Sidebar = () => {
       <nav className="list-none text-white font-bold text-xl card">
         <li
           className={
-            router.pathname === "/people"
+            router.pathname === "/"
               ? "block bg-slate-500 mx-5 transition-all text-sm"
               : "block hover:bg-slate-200 hover:text-black mx-5 transition-all text-sm rounded"
           }
         >
-          <Link href="/people">
+          <Link href="/">
             <a className="p-5 block">People</a>
           </Link>
         </li>
