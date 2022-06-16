@@ -52,7 +52,7 @@ const resolvers = {
       return await Appendix.find({ admin: ctx.user.id })
     },
     getPeople: async (_, __, ctx) => {
-      return await Person.find({ admin: ctx.user.id })
+      return await Person.find({ admin: ctx.user.id });
     },
     getProjects: async (_, __, ctx) => {
       return await Project.find({ admin: ctx.user.id })
@@ -114,8 +114,10 @@ const resolvers = {
       const emailResult = await Person.findOne(
         { "contact.email": email }, "contact");
 
+      console.log(emailResult)
+
       if (emailResult)
-        throw new Error("A person already registered with this email address");
+        throw new Error("One person already registered with that email address");
 
       try {
         input.admin = ctx.user.id;

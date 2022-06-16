@@ -18,6 +18,36 @@ const Mutation = {
   }
 }
   `,
+  createPerson: gql`
+    mutation CreatePerson($input: personInput) {
+  createPerson(input: $input) {
+    role
+    name
+    lastName
+    dateOfBirth
+    nationality
+    address {
+      city
+      village
+      description
+    }
+    professional {
+      occupation
+      EntryDate
+    }
+    contact {
+      phones
+      email
+    }
+    admin
+  }
+}
+  `,
+  deletePerson: gql`
+    mutation deletePerson($deletePersonId: ID!) {
+      deletePerson(id: $deletePersonId)
+    }
+  `,
 }
 
 export default Mutation;

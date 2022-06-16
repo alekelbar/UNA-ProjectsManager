@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../components/Layout'
 
 import * as Yup from 'yup'
@@ -8,12 +8,15 @@ import Mutation from '../Graphql/Mutation';
 import { useRouter } from 'next/router';
 
 // auto imports 
-import ErrorMessage from '../components/ErrorMessage';
+import FasterMessages from '../components/FasterMessages';
+import Link from 'next/link';
 
 
 const login = () => {
 
-  const [AuthUser] = useMutation(Mutation.authUser);
+  const [AuthUser] = useMutation(Mutation.authUser, {
+    fetchPolicy: "no-cache"
+  });
 
   const router = useRouter();
 
@@ -61,70 +64,92 @@ const login = () => {
     message ? setMessage(null) : null;
   }, 3000);
 
-
   return (
     <Layout>
-      {message && <ErrorMessage message={message} />}
-      <h4 className='text-center text-2xl text-white font-white font-thin'>Projects Manager</h4>
 
-      <div className='flex justify-center mt-5'>
-        <div className='w-full max-w-sm'>
-          <form className='bg-white rounded shadow-md px-8 pt-6 pb-8 mb-4'
-            onSubmit={formik.handleSubmit}
-          >
-            <div>
-              <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='email'>
-                Email
-              </label>
-              <input
-                id='email'
-                className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                type={'email'}
-                placeholder='User email'
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
-              />
+      <div className="bg-white dark:bg-gray-900">
+        <div className="flex justify-center h-screen">
+          <div className="hidden bg-cover lg:block lg:w-2/3" style={{ backgroundImage: "url(https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)" }}>
+            <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
+              <div>
+                <h2 className="text-4xl font-bold text-white">Project Manager</h2>
 
-              {formik.touched.email && formik.errors.email
-                ? <div className='my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4'>
-                  <p className='font-bold'>Error</p>
-                  <p>{formik.errors.email}</p>
+                <p className="max-w-xl mt-3 text-gray-300">Powered by: KAE Development Studio</p>
+                <div>
+                  {formik.touched.email && formik.errors.email
+                    ? <FasterMessages message={formik.errors.email} />
+                    : null
+                  }
+
+                  {formik.touched.password && formik.errors.password
+                    ? <FasterMessages message={formik.errors.password} />
+                    : null
+                  }
+
+                  {message && <FasterMessages message={message} />}
                 </div>
-                : null
-              }
-
-              <label className='block text-gray-700 text-sm font-bold mb-2 mt-2' htmlFor='password'>
-                Password
-              </label>
-              <input
-                id='password'
-                className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                type={'password'}
-                placeholder='User password'
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.password}
-              />
-
-              {formik.touched.password && formik.errors.password
-                ? <div className='my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4'>
-                  <p className='font-bold'>Error</p>
-                  <p>{formik.errors.password}</p>
-                </div>
-                : null
-              }
-
-              <input
-                type={'submit'}
-                className='bg-cyan-500 w-full mt-5 p-2 text-white uppercas hover:bg-gray-900 font-thin'
-                value={'Log In'}
-              />
+              </div>
             </div>
-          </form>
+          </div>
+
+          <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
+            <div className="flex-1">
+              <div className="text-center">
+                <h2 className="text-4xl font-bold text-center text-gray-700 dark:text-white">Projects Manager</h2>
+
+                <p className="mt-3 text-gray-500 dark:text-gray-300">Sign in to access your account</p>
+              </div>
+
+              <div className="mt-8">
+                <form onSubmit={formik.handleSubmit}>
+                  <div>
+                    <label for="email" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Email Address</label>
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="example@example.com"
+                      className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.email}
+                    />
+                  </div>
+
+                  <div className="mt-6">
+                    <input
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="Your Password"
+                      className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.password}
+                    />
+                  </div>
+
+                  <div className="mt-6">
+                    <button type='onSubmit'>
+                      <p
+                        className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                      >
+                        Sign in
+                      </p>
+                    </button>
+                  </div>
+
+                </form>
+
+                <Link href={'/addUser'}>
+                  <p className="mt-6 text-sm text-center text-gray-400">Dont have an account yet? <a className="text-blue-500 focus:outline-none focus:underline hover:underline">Sign up</a>.</p>
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </Layout>
+    </Layout >
   )
 }
 

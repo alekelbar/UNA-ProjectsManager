@@ -388,9 +388,9 @@ const typeDefs = gql`
   "INPUT: this makes it possible to add professional information to the person."
   input inputProfessionalInformation {
     "INPUT: the person's occupation."
-    occupation: [String]!
+    occupation: [String]
     "INPUT: the person's date of entry."
-    EntryDate: String!
+    EntryDate: String
     # yearsOfExp: String; I can calculate from the entry date
   }
   
