@@ -15,8 +15,8 @@
 const { ApolloServer } = require("apollo-server");
 const resolvers = require("./db/resolvers");
 const typeDefs = require("./db/schema");
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 //Database connection
 const connectDataBase = require("./config/db");
 connectDataBase();
@@ -26,19 +26,24 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => {
-    const token = req.headers['authorization'] || '';
+    const token = req.headers["authorization"] || "";
+    // console.log("Token", token);
     if (token) {
       try {
-        const user = jwt.verify(token.replace('Bearer ', ''), process.env.SECRETO);
+        const user = jwt.verify(
+          token.replace("Bearer ", ""),
+          process.env.SECRETO
+        );
         return {
-          user
-        }
+          user,
+        };
       } catch (error) {
-        console.log('Error...');
-        console.log(error)
+        console.log("Error... No es un token valido");
+        console.log(error);
+        // console.log(error);
       }
     }
-  }
+  },
 });
 
 //Start my server, it't respond a promise

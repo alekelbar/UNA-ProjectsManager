@@ -10,13 +10,11 @@ import FasterMessages from "../components/FasterMessages";
 
 const Home = () => {
 
-  const { data, loading } = useQuery(Query.GetPeople);
+  const { data, loading } = useQuery(Query.getPeople);
 
   const columns = ['Name', 'lastName', 'status', 'Email', 'Professional', 'City', 'Phone', 'Address', 'Description', 'Delete'];
 
   if (loading) return <HandleLoading />;
-
-  console.log(data);
 
   return (
     <>
