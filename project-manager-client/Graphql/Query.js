@@ -9,6 +9,7 @@ const Query = {
       name
       lastName
       dateOfBirth
+      nationality
       address {
         city
         village
@@ -23,7 +24,28 @@ const Query = {
         email
       }
       admin
+    }
+    getPeople {
+      id
+      role
+      name
+      lastName
+      dateOfBirth
       nationality
+      address {
+        city
+        village
+        description
+      }
+      professional {
+        occupation
+        EntryDate
+      }
+      contact {
+        phones
+        email
+      }
+      admin
     }
   }
   `,

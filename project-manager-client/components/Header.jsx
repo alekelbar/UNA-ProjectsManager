@@ -5,13 +5,9 @@ import React from 'react'
 import Query from '../Graphql/Query';
 
 const Header = () => {
+  const router = useRouter();
 
-  const router = useRouter()
-
-  const { data, loading } = useQuery(Query.getUser, {
-    fetchPolicy: "no-cache"
-  });
-
+  const { data, loading } = useQuery(Query.getUser);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -22,8 +18,8 @@ const Header = () => {
   if (loading) return null;
 
   if (!data.getUser) {
-    localStorage.removeItem('token');
-    router.push('/login')
+    localStorage.removeItem("token");
+    router.push("/login");
   }
 
   return (
@@ -39,7 +35,7 @@ const Header = () => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Header;

@@ -10,7 +10,6 @@ import Query from '../Graphql/Query';
 import Swal from 'sweetalert2';
 
 const addPerson = () => {
-
   const [createPerson] = useMutation(Mutation.createPerson, {
     update(cache, { data: { createPerson } }) {
       // obtener el resto del cache...
@@ -35,7 +34,7 @@ const addPerson = () => {
 
   const handleAcademic = () => {
     setHasOccupation(!hasOccupation);
-  }
+  };
 
   const valid_date = () => {
     return new Date(new Date().setFullYear(new Date().getFullYear() - 18));
@@ -68,38 +67,45 @@ const addPerson = () => {
       entryDate: Yup.date().max(new Date(), '0 days working here is not posible to register?'),
       ocupation: Yup.string(),
     }),
-    onSubmit: async values => {
-
-      console.log(values)
-      const { name, lastName, nacionality, city, village, description, phone, email, dateBirth, ocupation, entryDate } = values;
+    onSubmit: async (values) => {
+      console.log(values);
+      const {
+        name,
+        lastName,
+        nacionality,
+        city,
+        village,
+        description,
+        phone,
+        email,
+        dateBirth,
+        ocupation,
+        entryDate,
+      } = values;
       try {
         await createPerson({
           variables: {
-            "input": {
-              "role": [
-                (hasOccupation) ? 'ACADEMIC' : 'STUDENT'
-              ],
-              "name": name,
-              "lastName": lastName,
-              "nationality": nacionality,
-              "address": {
-                "city": city,
-                "village": village,
-                "description": description
+            input: {
+              role: [hasOccupation ? "ACADEMIC" : "STUDENT"],
+              name: name,
+              lastName: lastName,
+              nationality: nacionality,
+              address: {
+                city: city,
+                village: village,
+                description: description,
               },
               "professional": {
                 "occupation": hasOccupation ? [ocupation] : '',
                 "EntryDate": hasOccupation ? entryDate : '',
               },
-              "contact": {
-                "phones": [
-                  phone
-                ],
-                "email": email
+              contact: {
+                phones: [phone],
+                email: email,
               },
-              "dateOfBirth": dateBirth,
-            }
-          }
+              dateOfBirth: dateBirth,
+            },
+          },
         });
 
         Swal.fire('Added', 'success', 'info')
@@ -110,21 +116,24 @@ const addPerson = () => {
           setMessage(!message);
         }, 4000);
       }
-
-    }
+    },
   });
-
 
   return (
     <Layout>
-
-      <h1 className='text-2xl text-gray-800 font-light'>New Person</h1>
-      <div className='flex justify-center mt-5'>
-        <div className='w-full w-full'>
-
-          <form className='bg-white shadow-md px-2 pt-1 pb-3 mb-1' onSubmit={formik.handleSubmit}>
-            <label className='bg-blue-800 py-2 px-5 inline-block text-white rounded test-sm mt-3 uppercase font-thin'>
-              <input className='mr-2 ' type='checkbox' onChange={handleAcademic} />
+      <h1 className="text-2xl text-gray-800 font-light">New Person</h1>
+      <div className="flex justify-center mt-5">
+        <div className="w-full w-full">
+          <form
+            className="bg-white shadow-md px-2 pt-1 pb-3 mb-1"
+            onSubmit={formik.handleSubmit}
+          >
+            <label className="bg-blue-800 py-2 px-5 inline-block text-white rounded test-sm mt-3 uppercase font-thin">
+              <input
+                className="mr-2 "
+                type="checkbox"
+                onChange={handleAcademic}
+              />
               Academic - Profesional
             </label>
           </form>
@@ -136,7 +145,6 @@ const addPerson = () => {
               className='items-center flex-wrap bg-white shadow-md px-6 rounded pt-3 pb-2 mb-2 flex justify-between w-full'
               onSubmit={formik.handleSubmit}
             >
-
               <div>
                 <h4 className='text-sm text-gray-800 font-light mt-4'>Who are you?</h4>
                 <div className='p-1'>
@@ -144,20 +152,19 @@ const addPerson = () => {
                     Name
                   </label>
                   <input
-                    id='name'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type='text'
-                    placeholder='Name'
+                    id="name"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type="text"
+                    placeholder="Name"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.name}
                   />
-                  {formik.touched.name && formik.errors.name
-                    ? <div className='bg-red-100 border-l-1 border-red-500 text-red-700 text-sm'>
+                  {formik.touched.name && formik.errors.name ? (
+                    <div className="bg-red-100 border-l-1 border-red-500 text-red-700 text-sm">
                       <p>{formik.errors.name}</p>
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
 
 
@@ -166,20 +173,19 @@ const addPerson = () => {
                     lastName
                   </label>
                   <input
-                    id='lastName'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'text'}
-                    placeholder='lastName'
+                    id="lastName"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"text"}
+                    placeholder="lastName"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.lastName}
                   />
-                  {formik.touched.lastName && formik.errors.lastName
-                    ? <div className='bg-red-100 border-l-2 bo1der-red-500 text-red-700 text-sm'>
+                  {formik.touched.lastName && formik.errors.lastName ? (
+                    <div className="bg-red-100 border-l-2 bo1der-red-500 text-red-700 text-sm">
                       <p>{formik.errors.lastName}</p>
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
 
 
@@ -188,21 +194,20 @@ const addPerson = () => {
                     dateBirth
                   </label>
                   <input
-                    id='dateBirth'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'date'}
-                    placeholder='dateBirth'
+                    id="dateBirth"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"date"}
+                    placeholder="dateBirth"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.dateBirth}
                   />
 
-                  {formik.touched.dateBirth && formik.errors.dateBirth
-                    ? <div className='bg-red-100 border-l-2 bor1er-red-500 text-red-700 text-sm'>
+                  {formik.touched.dateBirth && formik.errors.dateBirth ? (
+                    <div className="bg-red-100 border-l-2 bor1er-red-500 text-red-700 text-sm">
                       <p>{formik.errors.dateBirth}</p>
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
 
                 <div className='p-1'>
@@ -210,23 +215,21 @@ const addPerson = () => {
                     Nacionality
                   </label>
                   <input
-                    id='nacionality'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'text'}
-                    placeholder='Nacionality'
+                    id="nacionality"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"text"}
+                    placeholder="Nacionality"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.nacionality}
                   />
-                  {formik.touched.nacionality && formik.errors.nacionality
-                    ? <div className='bg-red-100 border-l-2 borde1-red-500 text-red-700 text-sm'>
+                  {formik.touched.nacionality && formik.errors.nacionality ? (
+                    <div className="bg-red-100 border-l-2 borde1-red-500 text-red-700 text-sm">
                       <p>{formik.errors.nacionality}</p>
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
               </div>
-
 
               <div>
 
@@ -237,20 +240,19 @@ const addPerson = () => {
                     City
                   </label>
                   <input
-                    id='city'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'text'}
-                    placeholder='City'
+                    id="city"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"text"}
+                    placeholder="City"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.city}
                   />
-                  {formik.touched.city && formik.errors.city
-                    ? <div className='bg-red-100 border-l-1 border-red-500 text-red-700 text-sm'>
+                  {formik.touched.city && formik.errors.city ? (
+                    <div className="bg-red-100 border-l-1 border-red-500 text-red-700 text-sm">
                       <p>{formik.errors.city}</p>
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
 
 
@@ -259,20 +261,19 @@ const addPerson = () => {
                     Village
                   </label>
                   <input
-                    id='village'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'text'}
-                    placeholder='Village'
+                    id="village"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"text"}
+                    placeholder="Village"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.village}
                   />
-                  {formik.touched.village && formik.errors.village
-                    ? <div className='bg-red-100 border-l-2 b1rder-red-500 text-red-700 text-sm'>
+                  {formik.touched.village && formik.errors.village ? (
+                    <div className="bg-red-100 border-l-2 b1rder-red-500 text-red-700 text-sm">
                       <p>{formik.errors.village}</p>
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
 
 
@@ -281,21 +282,20 @@ const addPerson = () => {
                     Description
                   </label>
                   <input
-                    id='description'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'text'}
-                    placeholder='Description'
+                    id="description"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"text"}
+                    placeholder="Description"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.description}
                   />
                 </div>
-                {formik.touched.description && formik.errors.description
-                  ? <div className='bg-red-100 border-l-2 borde1-red-500 text-red-700 text-sm'>
+                {formik.touched.description && formik.errors.description ? (
+                  <div className="bg-red-100 border-l-2 borde1-red-500 text-red-700 text-sm">
                     <p>{formik.errors.description}</p>
                   </div>
-                  : null
-                }
+                ) : null}
               </div>
               <div>
 
@@ -306,10 +306,10 @@ const addPerson = () => {
                     Ocupation
                   </label>
                   <input
-                    id='ocupation'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'text'}
-                    placeholder='Ocupation'
+                    id="ocupation"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"text"}
+                    placeholder="Ocupation"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.ocupation}
@@ -322,10 +322,10 @@ const addPerson = () => {
                     EntryDate
                   </label>
                   <input
-                    id='entryDate'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'date'}
-                    placeholder='EntryDate'
+                    id="entryDate"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"date"}
+                    placeholder="EntryDate"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.entryDate}
@@ -349,20 +349,19 @@ const addPerson = () => {
                     Phone
                   </label>
                   <input
-                    id='phone'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'tel'}
-                    placeholder='Phone'
+                    id="phone"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"tel"}
+                    placeholder="Phone"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.phone}
                   />
-                  {formik.touched.phone && formik.errors.phone
-                    ? <div className='bg-red-100 border-l-21border-red-500 text-red-700 text-sm'>
+                  {formik.touched.phone && formik.errors.phone ? (
+                    <div className="bg-red-100 border-l-21border-red-500 text-red-700 text-sm">
                       <p>{formik.errors.phone}</p>
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
 
 
@@ -372,33 +371,32 @@ const addPerson = () => {
                     Unique Email
                   </label>
                   <input
-                    id='email'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'Email'}
-                    placeholder='Email'
+                    id="email"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"Email"}
+                    placeholder="Email"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.email}
                   />
                 </div>
-                {formik.touched.email && formik.errors.email
-                  ? <div className='bg-red-100 border-l-21border-red-500 text-red-700 text-sm'>
+                {formik.touched.email && formik.errors.email ? (
+                  <div className="bg-red-100 border-l-21border-red-500 text-red-700 text-sm">
                     <p>{formik.errors.email}</p>
                   </div>
-                  : null
-                }
+                ) : null}
               </div>
-              <div className='w-full'>
+              <div className="w-full">
                 <input
                   type={'submit'}
                   className='bg-cyan-500 w-full mt-5 p-2 text-white uppercas hover:bg-gray-900 font-thin'
                   value={'Add'}
                 />
               </div>
-
             </form>
-            : <form
-              className='flex-wrap items-center bg-white shadow-md px-8 pt-6 pb-8 mb-4 flex justify-between w-full'
+          ) : (
+            <form
+              className="flex-wrap items-center bg-white shadow-md px-8 pt-6 pb-8 mb-4 flex justify-between w-full"
               onSubmit={formik.handleSubmit}
             >
               <div>
@@ -408,20 +406,19 @@ const addPerson = () => {
                     Name
                   </label>
                   <input
-                    id='name'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type='text'
-                    placeholder='Name'
+                    id="name"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type="text"
+                    placeholder="Name"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.name}
                   />
-                  {formik.touched.name && formik.errors.name
-                    ? <div className='bg-red-100 border-l-1 border-red-500 text-red-700 text-sm'>
+                  {formik.touched.name && formik.errors.name ? (
+                    <div className="bg-red-100 border-l-1 border-red-500 text-red-700 text-sm">
                       <p>{formik.errors.name}</p>
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
 
 
@@ -430,20 +427,19 @@ const addPerson = () => {
                     lastName
                   </label>
                   <input
-                    id='lastName'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'text'}
-                    placeholder='lastName'
+                    id="lastName"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"text"}
+                    placeholder="lastName"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.lastName}
                   />
-                  {formik.touched.lastName && formik.errors.lastName
-                    ? <div className='bg-red-100 border-l-2 bo1der-red-500 text-red-700 text-sm'>
+                  {formik.touched.lastName && formik.errors.lastName ? (
+                    <div className="bg-red-100 border-l-2 bo1der-red-500 text-red-700 text-sm">
                       <p>{formik.errors.lastName}</p>
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
 
 
@@ -452,20 +448,19 @@ const addPerson = () => {
                     dateBirth
                   </label>
                   <input
-                    id='dateBirth'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'date'}
-                    placeholder='dateBirth'
+                    id="dateBirth"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"date"}
+                    placeholder="dateBirth"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.dateBirth}
                   />
-                  {formik.touched.dateBirth && formik.errors.dateBirth
-                    ? <div className='bg-red-100 border-l-2 bor1er-red-500 text-red-700 text-sm'>
+                  {formik.touched.dateBirth && formik.errors.dateBirth ? (
+                    <div className="bg-red-100 border-l-2 bor1er-red-500 text-red-700 text-sm">
                       <p>{formik.errors.dateBirth}</p>
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
 
 
@@ -474,20 +469,19 @@ const addPerson = () => {
                     Nacionality
                   </label>
                   <input
-                    id='nacionality'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'text'}
-                    placeholder='Nacionality'
+                    id="nacionality"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"text"}
+                    placeholder="Nacionality"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.nacionality}
                   />
-                  {formik.touched.nacionality && formik.errors.nacionality
-                    ? <div className='bg-red-100 border-l-2 borde1-red-500 text-red-700 text-sm'>
+                  {formik.touched.nacionality && formik.errors.nacionality ? (
+                    <div className="bg-red-100 border-l-2 borde1-red-500 text-red-700 text-sm">
                       <p>{formik.errors.nacionality}</p>
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
               </div>
 
@@ -500,20 +494,19 @@ const addPerson = () => {
                     City
                   </label>
                   <input
-                    id='city'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'text'}
-                    placeholder='City'
+                    id="city"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"text"}
+                    placeholder="City"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.city}
                   />
-                  {formik.touched.city && formik.errors.city
-                    ? <div className='bg-red-100 border-l-1 border-red-500 text-red-700 text-sm'>
+                  {formik.touched.city && formik.errors.city ? (
+                    <div className="bg-red-100 border-l-1 border-red-500 text-red-700 text-sm">
                       <p>{formik.errors.city}</p>
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
 
 
@@ -522,20 +515,19 @@ const addPerson = () => {
                     Village
                   </label>
                   <input
-                    id='village'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'text'}
-                    placeholder='Village'
+                    id="village"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"text"}
+                    placeholder="Village"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.village}
                   />
-                  {formik.touched.village && formik.errors.village
-                    ? <div className='bg-red-100 border-l-2 b1rder-red-500 text-red-700 text-sm'>
+                  {formik.touched.village && formik.errors.village ? (
+                    <div className="bg-red-100 border-l-2 b1rder-red-500 text-red-700 text-sm">
                       <p>{formik.errors.village}</p>
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
 
 
@@ -544,22 +536,20 @@ const addPerson = () => {
                     Description
                   </label>
                   <input
-                    id='description'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'text'}
-                    placeholder='Description'
+                    id="description"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"text"}
+                    placeholder="Description"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.description}
                   />
-                  {formik.touched.description && formik.errors.description
-                    ? <div className='bg-red-100 border-l-2 borde1-red-500 text-red-700 text-sm'>
+                  {formik.touched.description && formik.errors.description ? (
+                    <div className="bg-red-100 border-l-2 borde1-red-500 text-red-700 text-sm">
                       <p>{formik.errors.description}</p>
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
-
               </div>
 
               <div>
@@ -571,20 +561,19 @@ const addPerson = () => {
                     Phone
                   </label>
                   <input
-                    id='phone'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'tel'}
-                    placeholder='Phone'
+                    id="phone"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"tel"}
+                    placeholder="Phone"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.phone}
                   />
-                  {formik.touched.phone && formik.errors.phone
-                    ? <div className='bg-red-100 border-l-21border-red-500 text-red-700 text-sm'>
+                  {formik.touched.phone && formik.errors.phone ? (
+                    <div className="bg-red-100 border-l-21border-red-500 text-red-700 text-sm">
                       <p>{formik.errors.phone}</p>
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
 
 
@@ -594,39 +583,35 @@ const addPerson = () => {
                     Unique Email
                   </label>
                   <input
-                    id='email'
-                    className='shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    type={'Email'}
-                    placeholder='Email'
+                    id="email"
+                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type={"Email"}
+                    placeholder="Email"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.email}
                   />
                 </div>
 
-                {formik.touched.email && formik.errors.email
-                  ? <div className='bg-red-100 border-l-21border-red-500 text-red-700 text-sm'>
+                {formik.touched.email && formik.errors.email ? (
+                  <div className="bg-red-100 border-l-21border-red-500 text-red-700 text-sm">
                     <p>{formik.errors.email}</p>
                   </div>
-                  : null
-                }
+                ) : null}
               </div>
-              <div className='w-full'>
+              <div className="w-full">
                 <input
                   type={'submit'}
                   className='bg-cyan-500 w-full mt-1 p-2 text-white uppercas hover:bg-gray-900 font-thin'
                   value={'Add'}
                 />
               </div>
-
             </form>
-          }
-
-
+          )}
         </div>
-      </div >
-    </Layout >
-  )
-}
+      </div>
+    </Layout>
+  );
+};
 
 export default addPerson;

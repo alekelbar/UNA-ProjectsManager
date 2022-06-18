@@ -41,7 +41,11 @@ const Mutation = {
       }
       admin
     }
+<<<<<<< HEAD
 }
+=======
+  }
+>>>>>>> ac677143f4d6be985d5eae90eb947e31f5caf820
   `,
   deletePerson: gql`
     mutation deletePerson($deletePersonId: ID!) {
