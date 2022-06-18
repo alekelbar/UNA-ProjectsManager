@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 const Query = {
-  GetPeople: gql`
+  getPeople: gql`
   query GetPeople {
     getPeople {
       id
@@ -38,8 +38,65 @@ const Query = {
         }
       }
   `,
-
+  getPerson: gql`
+  query GetPerson($getPersonId: ID!) {
+    getPerson(id: $getPersonId) {
+      id
+      role
+      name
+      lastName
+      dateOfBirth
+      address {
+        city
+        village
+        description
+      }
+      professional {
+        occupation
+        EntryDate
+      }
+      contact {
+        phones
+        email
+      }
+      admin
+      nationality
+    }
+  }
+  `,
+  getOwners: gql`
+    query Query {
+      getPeople {
+        id
+        name
+      }
+    }
+  `,
+  getAppendixs: gql`
+    query GetAppendixs {
+    getAppendixs {
+      description
+      owner
+      dataUrl
+      admin
+  }
 }
+  `,
+  getPeopleOnlyId: gql`
+    
+  query GetPeople {
+    getPeople {
+      id
+      name
+      contact {
+      email
+      }
+    }
+  }
+  `,
+}
+
+
 
 
 export default Query;

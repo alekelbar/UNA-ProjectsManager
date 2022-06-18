@@ -5,44 +5,47 @@ import Query from "../Graphql/Query";
 import ProtectedView from "../components/ProtectedRoute";
 import Link from "next/link";
 import Person from "../components/Person";
-import PersonHeaders from "../components/PersonHeaders";
 import FasterMessages from "../components/FasterMessages";
 
 const Home = () => {
 
-  const { data, loading } = useQuery(Query.GetPeople);
-
-  const columns = ['Name', 'lastName', 'status', 'Email', 'Professional', 'City', 'Phone', 'Address', 'Description', 'Delete'];
+  const { data, loading } = useQuery(Query.getPeople);
 
   if (loading) return <HandleLoading />;
-
-  console.log(data);
 
   return (
     <>
       {data?.getPeople ?
         <Layout>
 
-          <div className="w-full">
-            <h1 className="text-2xl text-gray-800 font-thin">People</h1>
-            <Link href={'/addPerson'}>
-              <a className="bg-blue-800 py-2 px-5 inline-block text-white rounded test-sm hover:bg-gray-800 mt-3 uppercase font-bold">Add person</a>
-            </Link>
-            <table className="table-auto w-full shadow-md mt-10 w-lg text-sm text-thin">
-              <thead className="text-start">
-                <PersonHeaders colums={columns} />
-              </thead>
+          <div className="w-4/5">
+            {/* <h1 className="text-2xl text-gray-800 font-thin">People</h1> */}
+            <div className="overflow-auto w-full">
+              <p className="py-3">
+                <Link href={'/addPerson'}>
+                  <a className="text-lg bg-blue-800 py-2 px-5 inline-block text-white rounded mt-3 uppercase font-bold">Add person</a>
+                </Link>
+              </p>
+              <table className="table-auto w-full mt-5 sm:w-auto lg:w-full">
+                <thead className="border-b-2 border-t-2">
+                  <tr>
+                    <th className="p-5 text-center font-semibold text-xl bg-black text-white rounded">People List</th>
+                  </tr>
+                </thead>
 
-              <tbody className="bg-white">
-                {data?.getPeople.map(p => (
-                  <Person key={p.id} person={p} />
-                ))}
-              </tbody>
-            </table>
-
-            {data.lenght === 0 ? <FasterMessages message={'No Data found'} /> : null}
+                <tbody className="">
+                  {
+                    data?.getPeople.map(p => (
+                      <Person key={p.id} person={p} />
+                    ))
+                  }
+                </tbody>
+              </table>
+            </div>
           </div>
-        </Layout > : <ProtectedView />}
+          {data?.getPeople?.length === 0 ? <FasterMessages message={'No data found, please add People'} /> : null}
+        </Layout > : <ProtectedView />
+      }
     </ >
   );
 }

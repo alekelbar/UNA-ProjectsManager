@@ -40,11 +40,11 @@ const participantSchema = mongoose.Schema({
 
 const durationSchema = mongoose.Schema({
   start: {
-    type: Date,
-    default: Date.now(),
+    type: String,
+    default: Date.now().toString(),
   },
   end: {
-    type: Date,
+    type: String,
     required: true,
   },
 });

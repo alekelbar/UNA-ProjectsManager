@@ -235,7 +235,7 @@ const resolvers = {
       const person = await Person.findOne({ id, admin: ctx.user.id });
       if (!person) throw new Error("It does not exist or does not have permissions on it.");
       // updatePerson
-      return await Person.findAndUpdate({ _id: id }, input, { new: true });
+      return await Person.findOneAndUpdate({ _id: id }, input, { new: true });
     },
     deletePerson: async (_, { id }, ctx) => {
       const person = await Person.findOne({ id, admin: ctx.user.id });

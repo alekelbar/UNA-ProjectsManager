@@ -1,4 +1,5 @@
-import { Cache, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import client from './../config/apollo'
 import { useRouter } from 'next/router';
 import React from 'react'
 import Query from '../Graphql/Query';
@@ -14,6 +15,7 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    client.clearStore();
     router.push('/login');
   }
 
@@ -25,15 +27,17 @@ const Header = () => {
   }
 
   return (
-    <div className='flex justify-between h-11'>
-      <p className='mr-2 text-xl animate-bounce'>Welcome: {data.getUser.name}</p>
-      <button
-        className='bg-blue-800 hover:bg-gray-800 w-1/6 sm:auto min-h-ful font-bold uppecase text-xs rounded px-2 text-white shadow-md'
-        type='button'
-        onClick={handleLogout}
-      >
-        LogOut
-      </button>
+    <div className='h-min fixed right-5 top-7'>
+      <div className='flex justify-between h-11 sm:flex-col'>
+        <p className='mr-4 text-xl animate-bounce'>Welcome: {data.getUser.name}</p>
+        <button
+          className='text-lg bg-blue-800 hover:bg-gray-800 min-h-full w-1/6 w-auto font-bold uppecase text-xs rounded px-2 text-white shadow-md'
+          type='button'
+          onClick={handleLogout}
+        >
+          LogOut
+        </button>
+      </div>
     </div>
   )
 }

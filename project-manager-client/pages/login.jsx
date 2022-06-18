@@ -10,13 +10,12 @@ import { useRouter } from 'next/router';
 // auto imports 
 import FasterMessages from '../components/FasterMessages';
 import Link from 'next/link';
+import Swal from 'sweetalert2';
 
 
 const login = () => {
 
-  const [AuthUser] = useMutation(Mutation.authUser, {
-    fetchPolicy: "no-cache"
-  });
+  const [AuthUser] = useMutation(Mutation.authUser);
 
   const router = useRouter();
 
@@ -48,6 +47,7 @@ const login = () => {
         localStorage.setItem('token', token);
 
         setMessage('Auth in progress...')
+        Swal.fire('Auth System', "let's Enjoy!", 'info')
         setTimeout(() => {
           router.push('/');
         }, 1500);

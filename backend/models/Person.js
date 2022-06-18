@@ -64,7 +64,7 @@ const PersonSchema = mongoose.Schema({
   },
 
   dateOfBirth: {
-    type: Date,
+    type: String,
     require: true,
   },
 

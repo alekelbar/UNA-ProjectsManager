@@ -6,11 +6,27 @@ import { useMutation } from '@apollo/client';
 import Mutation from '../Graphql/Mutation';
 import FasterMessages from '../components/FasterMessages';
 import { useRouter } from 'next/router';
+import Query from '../Graphql/Query';
+import Swal from 'sweetalert2';
 
 const addPerson = () => {
 
   const [createPerson] = useMutation(Mutation.createPerson, {
-    fetchPolicy: "no-cache"
+    update(cache, { data: { createPerson } }) {
+      // obtener el resto del cache...
+      const { getPeople } = cache.readQuery({ query: Query.getPeople });
+
+      console.log("Create person", createPerson);
+      console.log("get people", Query.getPeople);
+
+      // ajustar la cache sin mutarla
+      cache.writeQuery({
+        query: Query.getPeople,
+        data: {
+          getPeople: [...getPeople, createPerson],
+        },
+      });
+    },
   });
 
   const [hasOccupation, setHasOccupation] = useState(true);
@@ -21,6 +37,10 @@ const addPerson = () => {
     setHasOccupation(!hasOccupation);
   }
 
+  const valid_date = () => {
+    return new Date(new Date().setFullYear(new Date().getFullYear() - 18));
+  }
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -29,22 +49,24 @@ const addPerson = () => {
       nacionality: '',
       city: '',
       village: '',
-      description: '',
       ocupation: '',
       entryDate: '',
+      description: '',
       phone: '',
       email: '',
     },
     validationSchema: Yup.object({
       name: Yup.string().required('The name is required'),
       lastName: Yup.string().required('The lastName is required'),
-      dateBirth: Yup.date().required('The date of birth is required'),
+      dateBirth: Yup.date().required('The date of birth is required').max(valid_date(), 'You need at least 15 years to use this tool'),
       nacionality: Yup.string().required('The nacionality is required'),
       city: Yup.string().required('The city is required'),
       village: Yup.string().required('The village is required'),
       description: Yup.string().required('The description is required'),
       phone: Yup.string().required('The phone is required'),
       email: Yup.string().email().required('The email is required'),
+      entryDate: Yup.date().max(new Date(), '0 days working here is not posible to register?'),
+      ocupation: Yup.string(),
     }),
     onSubmit: async values => {
 
@@ -66,7 +88,7 @@ const addPerson = () => {
                 "description": description
               },
               "professional": {
-                "occupation": hasOccupation ? ocupation : '',
+                "occupation": hasOccupation ? [ocupation] : '',
                 "EntryDate": hasOccupation ? entryDate : '',
               },
               "contact": {
@@ -79,13 +101,11 @@ const addPerson = () => {
             }
           }
         });
-        setMessage('Recording new information ...');
-        setTimeout(() => {
-          router.push('/');
-        }, 2000);
+
+        Swal.fire('Added', 'success', 'info')
+        router.push('/');
       } catch (error) {
         setMessage(error.message)
-
         setTimeout(() => {
           setMessage(!message);
         }, 4000);
@@ -113,14 +133,14 @@ const addPerson = () => {
 
           {hasOccupation
             ? <form
-              className='items-center flex-wrap bg-white shadow-md px-8 pt-6 pb-8 mb-4 flex justify-between w-full'
+              className='items-center flex-wrap bg-white shadow-md px-6 rounded pt-3 pb-2 mb-2 flex justify-between w-full'
               onSubmit={formik.handleSubmit}
             >
 
               <div>
-                <h4 className='text-xl text-gray-800 font-light mt-4'>Who are you?</h4>
+                <h4 className='text-sm text-gray-800 font-light mt-4'>Who are you?</h4>
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='name'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='name'>
                     Name
                   </label>
                   <input
@@ -142,7 +162,7 @@ const addPerson = () => {
 
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='lastName'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='lastName'>
                     lastName
                   </label>
                   <input
@@ -164,7 +184,7 @@ const addPerson = () => {
 
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='dateBirth'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='dateBirth'>
                     dateBirth
                   </label>
                   <input
@@ -186,7 +206,7 @@ const addPerson = () => {
                 </div>
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='nacionality'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='nacionality'>
                     Nacionality
                   </label>
                   <input
@@ -210,10 +230,10 @@ const addPerson = () => {
 
               <div>
 
-                <h4 className='text-xl text-gray-800 font-light mt-4'>Address</h4>
+                <h4 className='text-sm text-gray-800 font-light mt-4'>Address</h4>
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='city'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='city'>
                     City
                   </label>
                   <input
@@ -235,7 +255,7 @@ const addPerson = () => {
 
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='village'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='village'>
                     Village
                   </label>
                   <input
@@ -257,7 +277,7 @@ const addPerson = () => {
 
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='description'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='description'>
                     Description
                   </label>
                   <input
@@ -279,10 +299,10 @@ const addPerson = () => {
               </div>
               <div>
 
-                <h4 className='text-xl text-gray-800 font-light mt-4'>Profesional</h4>
+                <h4 className='text-sm text-gray-800 font-light mt-4'>Profesional</h4>
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='ocupation'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='ocupation'>
                     Ocupation
                   </label>
                   <input
@@ -298,7 +318,7 @@ const addPerson = () => {
 
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='entryDate'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='entryDate'>
                     EntryDate
                   </label>
                   <input
@@ -311,14 +331,21 @@ const addPerson = () => {
                     value={formik.values.entryDate}
                   />
                 </div>
+
+                {formik.touched.entryDate && formik.errors.entryDate
+                  ? <div className='bg-red-100 border-l-2 borde1-red-500 text-red-700 text-sm'>
+                    <p>{formik.errors.entryDate}</p>
+                  </div>
+                  : null
+                }
               </div>
 
               <div>
-                <h4 className='text-xl text-gray-800 font-light mt-4'>Contact</h4>
+                <h4 className='text-sm text-gray-800 font-light mt-4'>Contact</h4>
 
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='phone'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='phone'>
                     Phone
                   </label>
                   <input
@@ -341,7 +368,7 @@ const addPerson = () => {
 
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='email'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='email'>
                     Unique Email
                   </label>
                   <input
@@ -365,7 +392,7 @@ const addPerson = () => {
                 <input
                   type={'submit'}
                   className='bg-cyan-500 w-full mt-5 p-2 text-white uppercas hover:bg-gray-900 font-thin'
-                  value={'Log In'}
+                  value={'Add'}
                 />
               </div>
 
@@ -375,9 +402,9 @@ const addPerson = () => {
               onSubmit={formik.handleSubmit}
             >
               <div>
-                <h4 className='text-xl text-gray-800 font-light mt-4'>Who are you?</h4>
+                <h4 className='text-sm text-gray-800 font-light mt-4'>Who are you?</h4>
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='name'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='name'>
                     Name
                   </label>
                   <input
@@ -399,7 +426,7 @@ const addPerson = () => {
 
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='lastName'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='lastName'>
                     lastName
                   </label>
                   <input
@@ -421,7 +448,7 @@ const addPerson = () => {
 
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='dateBirth'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='dateBirth'>
                     dateBirth
                   </label>
                   <input
@@ -443,7 +470,7 @@ const addPerson = () => {
 
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='nacionality'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='nacionality'>
                     Nacionality
                   </label>
                   <input
@@ -466,10 +493,10 @@ const addPerson = () => {
 
               <div>
 
-                <h4 className='text-xl text-gray-800 font-light mt-4'>Address</h4>
+                <h4 className='text-sm text-gray-800 font-light mt-4'>Address</h4>
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='city'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='city'>
                     City
                   </label>
                   <input
@@ -491,7 +518,7 @@ const addPerson = () => {
 
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='village'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='village'>
                     Village
                   </label>
                   <input
@@ -513,7 +540,7 @@ const addPerson = () => {
 
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='description'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='description'>
                     Description
                   </label>
                   <input
@@ -536,11 +563,11 @@ const addPerson = () => {
               </div>
 
               <div>
-                <h4 className='text-xl text-gray-800 font-light mt-4'>Contact</h4>
+                <h4 className='text-sm text-gray-800 font-light mt-4'>Contact</h4>
 
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='phone'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='phone'>
                     Phone
                   </label>
                   <input
@@ -563,7 +590,7 @@ const addPerson = () => {
 
 
                 <div className='p-1'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='email'>
+                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='email'>
                     Unique Email
                   </label>
                   <input
@@ -588,7 +615,7 @@ const addPerson = () => {
                 <input
                   type={'submit'}
                   className='bg-cyan-500 w-full mt-1 p-2 text-white uppercas hover:bg-gray-900 font-thin'
-                  value={'Log In'}
+                  value={'Add'}
                 />
               </div>
 

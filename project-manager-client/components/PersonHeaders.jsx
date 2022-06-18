@@ -2,9 +2,9 @@ import React from 'react'
 
 const PersonHeaders = ({ colums }) => {
   return (
-    <tr className='hover:bg-stone-100'>
+    <tr className='flex flex-col'>
       {colums.map(c => (
-        <th className="w-min py-2 text-bold text-sm bg-gray-200 pl-2">{c}</th>
+        <th key={c} className="border-slate-600 text-center w-min py-3">{c}</th>
       ))}
     </tr>
   )

@@ -20,27 +20,27 @@ const Mutation = {
   `,
   createPerson: gql`
     mutation CreatePerson($input: personInput) {
-  createPerson(input: $input) {
-    role
-    name
-    lastName
-    dateOfBirth
-    nationality
-    address {
-      city
-      village
-      description
+    createPerson(input: $input) {
+      role
+      name
+      lastName
+      dateOfBirth
+      nationality
+      address {
+        city
+        village
+        description
+      }
+      professional {
+        occupation
+        EntryDate
+      }
+      contact {
+        phones
+        email
+      }
+      admin
     }
-    professional {
-      occupation
-      EntryDate
-    }
-    contact {
-      phones
-      email
-    }
-    admin
-  }
 }
   `,
   deletePerson: gql`
@@ -48,6 +48,42 @@ const Mutation = {
       deletePerson(id: $deletePersonId)
     }
   `,
+  updatePerson: gql`
+   mutation UpdatePerson($updatePersonId: ID!, $input: personInput) {
+     updatePerson(id: $updatePersonId, input: $input) {
+       id
+       role
+       name
+       lastName
+       dateOfBirth
+       nationality
+       address {
+         city
+         village
+         description
+       }
+       professional {
+         occupation
+         EntryDate
+       }
+       contact {
+         phones
+         email
+       }
+       admin
+     }
+   }
+ `,
+  createAppendix: gql`
+  mutation CreateAppendix($input: AppendixInput) {
+  createAppendix(input: $input) {
+    description
+    owner
+    dataUrl
+    admin
+  }
+}
+ `,
 }
 
 export default Mutation;

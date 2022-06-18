@@ -23,8 +23,8 @@ const UserSchema = mongoose.Schema({
     trim: true
   },
   created: {
-    type: Date,
-    default: Date.now()
+    type: String,
+    default: Date.now().toString()
   }
 });
 

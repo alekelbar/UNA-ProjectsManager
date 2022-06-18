@@ -34,16 +34,20 @@ const Layout = ({ children }) => {
               {children}
             </div>
           ) :
-          (<div
-            className="flex justify-center space-x-2 bg-sky-100 text-black min-h-screen w-screen"
-            style={{ fontFamily: "Merriweather" }}
-          >
-            <Sidebar />
-            <main className="w-5/6 w-full bg-[#DFF6FF] text-xs sm:min-h-screen p-5">
-              <Header />
-              {children}
-            </main>
-          </div>)
+          (
+            <div
+              className="flex justify-center space-x-2 bg-sky-100 text-black min-h-screen w-screen"
+              style={{ fontFamily: "Merriweather" }}
+            >
+              <Sidebar />
+              <main className="w-3/4 bg-[#DFF6FF] text-xs sm:min-h-screen">
+                <Header />
+                <div className="flex flex-col justify-center items-center">
+                  {children}
+                </div>
+              </main>
+            </div>
+          )
 
       }
     </>
