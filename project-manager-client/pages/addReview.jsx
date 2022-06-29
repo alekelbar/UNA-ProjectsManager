@@ -122,13 +122,13 @@ const addReview = () => {
 
   return (
     <Layout>
-      <h2 className='pt-3 text-2xl text-gray-800 font-light'>Add Review</h2>
       {message ? <FasterMessages message={message} /> : null}
       <div className='flex justify-center mt-5 w-full'>
         <form
           onSubmit={formik.handleSubmit}
           className='items-start flex-wrap bg-white shadow-md px-6 rounded pt-3 pb-2 mb-2 flex flex-col justify-between w-3/5' >
           {/* {// Seleccionar el proyecto...} */}
+          <h2 className='pt-3 text-2xl text-gray-800 font-light mb-2 text-center w-full'>Add Review</h2>
           <label className='block text-gray-700 text-sm mb-2 font-bold mt-2'>
             Project
           </label>

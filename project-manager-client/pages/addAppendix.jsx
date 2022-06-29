@@ -71,7 +71,6 @@ const AddAppendix = () => {
 
   return (
     <Layout>
-      <h2 className='pt-3 text-2xl text-gray-800 font-light'>Add Appendix</h2>
       {data?.getPeople
         ? <div className='flex justify-center mt-5'>
           <div className='w-full w-full'>
@@ -79,6 +78,7 @@ const AddAppendix = () => {
               className='p-5 items-center flex-wrap bg-white shadow-md px-6 rounded pt-3 pb-2 mb-2 flex justify-between w-full'
               onSubmit={formik.handleSubmit}
             >
+              <h2 className='pt-3 text-2xl text-gray-800 font-light mb-2 text-center w-full'>Add Appendix</h2>
               {/* // section */}
               <div className='w-full'>
 

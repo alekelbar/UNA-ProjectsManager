@@ -2,7 +2,6 @@ import { Formik } from 'formik';
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import Layout from '../../components/Layout';
-import DropdownMenu from '../../components/DropdownMenu';
 import { useMutation, useQuery } from '@apollo/client';
 import Query from '../../Graphql/Query';
 import HandleLoading from '../../components/HandleLogin';
@@ -74,7 +73,7 @@ const editAppendix = () => {
   return (
     <Layout>
       {message ? <FasterMessages message={message} /> : null}
-      <div className='flex justify-center mt-5'>
+      <div className='flex justify-center mt-5 w-3/6'>
         <div className='w-full w-full'>
 
           <Formik
@@ -97,7 +96,7 @@ const editAppendix = () => {
                 >
                   {/* // section */}
                   <div div className='w-full' >
-                    <h4 className='text-sm text-gray-800 font-light mt-4'>Appendix form</h4>
+                    <h4 className='text-sm text-gray-800 font-light mt-4 mb-2 text-center w-full'>Appendix</h4>
 
                     <label className='block text-gray-700 text-sm mb-2 font-bold mt-2'>
                       Owner
@@ -156,7 +155,7 @@ const editAppendix = () => {
                     <input
                       type={'submit'}
                       className='bg-cyan-500 w-full mt-1 p-2 text-white uppercas hover:bg-gray-900 font-thin'
-                      value={'Add'}
+                      value={'update'}
                     />
                   </div>
 
