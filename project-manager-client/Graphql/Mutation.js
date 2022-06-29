@@ -41,11 +41,7 @@ const Mutation = {
       }
       admin
     }
-<<<<<<< HEAD
 }
-=======
-  }
->>>>>>> ac677143f4d6be985d5eae90eb947e31f5caf820
   `,
   deletePerson: gql`
     mutation deletePerson($deletePersonId: ID!) {
@@ -88,6 +84,48 @@ const Mutation = {
   }
 }
  `,
+  deleteAppendix: gql`
+  mutation DeleteAppendix($deleteAppendixId: ID!) {
+  deleteAppendix(id: $deleteAppendixId)
+}
+ `,
+  deleteReview: gql`
+  mutation DeleteReview($deleteReviewId: ID!) {
+  deleteReview(id: $deleteReviewId)
+}
+ `,
+  createReview: gql`
+ mutation CreateReview($input: inputReview) {
+  createReview(input: $input) {
+    report
+    project
+    managers {
+      firstPerson
+      secondPerson
+    }
+    grade
+  }
+}
+`,
+  updateReview: gql`
+  mutation UpdateReview($updateReviewId: ID!, $input: inputReview) {
+  updateReview(id: $updateReviewId, input: $input) {
+    report
+  }
+}
+`,
+  updateAppendix: gql`
+  mutation UpdateAppendix($updateAppendixId: ID!, $input: AppendixInput!) {
+  updateAppendix(id: $updateAppendixId, input: $input) {
+    id
+    description
+    owner
+    dataUrl
+    admin
+  }
+}
+`,
+
 }
 
 export default Mutation;

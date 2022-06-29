@@ -1,26 +1,45 @@
-import { useMutation } from '@apollo/client'
-import Router from 'next/router';
+import { useMutation, useQuery } from '@apollo/client'
 import React from 'react'
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import Mutation from '../Graphql/Mutation';
-import Query from '../Graphql/Query';
-import Emphasis from './Emphasis';
+import Query from '../Graphql/Query'
+import Router from 'next/router';
+export const ReviewTable = ({ review }) => {
 
-const PersonRow = ({ person }) => {
-
-  const [deletePerson] = useMutation(Mutation.deletePerson, {
+  const [deleteReview] = useMutation(Mutation.deleteReview, {
     update(cache) {
-      //obtener una copia del objeto de cache
-      const { getPeople } = cache.readQuery({ query: Query.getPeople });
-      // Reescribir el cache
+      //obtener el array de cache de las reviews 
+      const { getReviews } = cache.readQuery({ query: Query.getReviews });
+
+      // actualizar el array...
       cache.writeQuery({
-        query: Query.getPeople,
+        query: Query.getReviews,
         data: {
-          getPeople: getPeople.filter((e) => e.id !== person.id),
-        },
-      });
-    },
+          getReviews: getReviews.filter(e => e.id !== review.id),
+        }
+      })
+    }
   });
+
+  // obtener la información de las personas...
+  const { data } = useQuery(Query.getManagers, {
+    variables: {
+      "idF": review.managers.firstPerson,
+      "idS": review.managers.secondPerson
+    }
+  });
+
+  const { data: project } = useQuery(Query.getProject, {
+    variables: {
+      "getProjectId": review.project
+    }
+  });
+
+  if (!data || !project) return <tr><td>Loading...</td></tr>
+
+  const [firstPerson, secondPerson] = data.getManagers;
+  const project_name = project.getProject.projectName;
+
 
   const handleDelete = () => {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -43,14 +62,15 @@ const PersonRow = ({ person }) => {
       if (result.isConfirmed) {
 
         try {
-          const { data } = await deletePerson({
+          const { data } = await deleteReview({
             variables: {
-              deletePersonId: person.id
+              "deleteReviewId": review.id
             }
           });
+
           swalWithBootstrapButtons.fire(
             'Deleted!',
-            data.deletePerson,
+            data.deleteReview,
             'success'
           )
         } catch (error) {
@@ -69,48 +89,30 @@ const PersonRow = ({ person }) => {
     })
   }
 
+
   const handleEdit = () => {
     Router.push({
-      pathname: "/editPerson/[id]",
+      pathname: "/editReview/[id]",
       query: {
-        id: person.id
+        id: review.id,
+        project: review.project,
+        firstPerson: review.managers.firstPerson,
+        secondPerson: review.managers.secondPerson
       }
     })
   }
 
+
   return (
-    <tr key={person.id} className='border-t-2 font-thin flex flex-col text-center hover:bg-[#DFFFFF] pb-5'>
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'Name'} />: {person.name}
+    <tr className='border-b-2'>
+      <td className='p-3 text-xs text-center border bg-slate-200 font-bold border-2 border-black'>{project_name}</td>
+      <td className='p-3 text-xs text-center border bg-slate-200 font-bold border-2 border-black'>{review.report}</td>
+      <td className='p-3 text-xs text-center border bg-slate-200 font-bold border-2 border-black'>
+        {firstPerson.name} {firstPerson.lastName} and {secondPerson.name} {secondPerson.lastName}
       </td>
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'lastName'} />: {person.lastName}
-      </td>
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'Status'} />: {person.role.map(e => e + '\n')}
-      </td>
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'Email'} />: {person.contact.email}
-      </td>
+      <td className='p-3 text-xs text-center border bg-slate-200 font-bold border-2 border-black'>{review.grade}</td>
 
-      {person?.professional.occupation?.some(e => e != '') ? <td className="text-sm border-b-2 px-4 text-sm  py-1 "> <Emphasis message={'Profesional'} /> {person.professional.occupation.map(e => e + " ")}</td> : <td className="text-sm border-b-2 px-4 text-sm  py-1 bg-slate-200 text-black rounded">unemploye</td>}
-
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'Nacionality'} />: {person.nationality}
-      </td>
-
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'Phone'} />: {person.contact.phones.map(e => e + ' ')}
-      </td>
-
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'city'} />: {person.address.city}
-      </td>
-
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'Address'} />: {person.address.description}
-      </td>
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
+      <td className='p-3 text-xs text-center border bg-slate-200 font-bold border-2 border-black'>
         <button
           type='button'
           className='flex justify-center items-center bg-red-800 text-sm  py-1  px-4 w-full text-white rounded text-sm border-b-2 uppercase font-bold'
@@ -141,8 +143,6 @@ const PersonRow = ({ person }) => {
           </svg>
         </button>
       </td>
-    </tr>
-  );
-};
-
-export default PersonRow;
+    </tr >
+  )
+}

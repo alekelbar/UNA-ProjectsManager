@@ -1,25 +1,25 @@
-import { useMutation } from '@apollo/client'
-import Router from 'next/router';
+import { useMutation } from '@apollo/client';
 import React from 'react'
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import Mutation from '../Graphql/Mutation';
 import Query from '../Graphql/Query';
-import Emphasis from './Emphasis';
+import Router from 'next/router';
 
-const PersonRow = ({ person }) => {
+const AppendixTable = ({ appendix }) => {
 
-  const [deletePerson] = useMutation(Mutation.deletePerson, {
+
+
+  const [deleteAppendix] = useMutation(Mutation.deleteAppendix, {
     update(cache) {
-      //obtener una copia del objeto de cache
-      const { getPeople } = cache.readQuery({ query: Query.getPeople });
-      // Reescribir el cache
+      // obtengo la cache...
+      const { getAppendixs } = cache.readQuery({ query: Query.getAppendixs });
+
+      // sin mutar, aplico los cambios...
       cache.writeQuery({
-        query: Query.getPeople,
-        data: {
-          getPeople: getPeople.filter((e) => e.id !== person.id),
-        },
+        query: Query.getAppendixs,
+        data: { getAppendixs: getAppendixs.filter(e => e.id !== appendix.app.id) },
       });
-    },
+    }
   });
 
   const handleDelete = () => {
@@ -43,14 +43,16 @@ const PersonRow = ({ person }) => {
       if (result.isConfirmed) {
 
         try {
-          const { data } = await deletePerson({
+          const { data, error } = await deleteAppendix({
             variables: {
-              deletePersonId: person.id
+              deleteAppendixId: appendix.app.id
             }
           });
+
+          console.log(data, error);
           swalWithBootstrapButtons.fire(
             'Deleted!',
-            data.deletePerson,
+            data.deleteAppendix,
             'success'
           )
         } catch (error) {
@@ -69,48 +71,26 @@ const PersonRow = ({ person }) => {
     })
   }
 
+
   const handleEdit = () => {
     Router.push({
-      pathname: "/editPerson/[id]",
+      pathname: "/editAppendix/[id]",
       query: {
-        id: person.id
+        id: appendix.app.id,
+        description: appendix.app.description,
+        url: appendix.app.dataUrl,
+        owner_id: appendix.ownerInfo.id
       }
     })
   }
 
+
   return (
-    <tr key={person.id} className='border-t-2 font-thin flex flex-col text-center hover:bg-[#DFFFFF] pb-5'>
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'Name'} />: {person.name}
-      </td>
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'lastName'} />: {person.lastName}
-      </td>
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'Status'} />: {person.role.map(e => e + '\n')}
-      </td>
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'Email'} />: {person.contact.email}
-      </td>
-
-      {person?.professional.occupation?.some(e => e != '') ? <td className="text-sm border-b-2 px-4 text-sm  py-1 "> <Emphasis message={'Profesional'} /> {person.professional.occupation.map(e => e + " ")}</td> : <td className="text-sm border-b-2 px-4 text-sm  py-1 bg-slate-200 text-black rounded">unemploye</td>}
-
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'Nacionality'} />: {person.nationality}
-      </td>
-
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'Phone'} />: {person.contact.phones.map(e => e + ' ')}
-      </td>
-
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'city'} />: {person.address.city}
-      </td>
-
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
-        <Emphasis message={'Address'} />: {person.address.description}
-      </td>
-      <td className="text-sm border-b-2 px-4 text-sm py-1 bg-slate-200 text-black rounded ">
+    <tr className='border-b-2' key={appendix.app.owner}>
+      <td className='p-3 text-xs text-center border bg-slate-200 font-bold border-2 border-black'>{appendix.app.description}</td>
+      <td className='p-3 text-xs text-center border bg-slate-200 font-bold border-2 border-black'>{appendix.ownerInfo.contact.email}</td>
+      <td className='p-3 text-xs text-center border bg-slate-200 font-bold border-2 border-black'>{<a href={appendix.app.dataUrl}>{appendix.app.dataUrl}</a>}</td>
+      <td className='p-3 text-xs text-center border bg-slate-200 font-bold border-2 border-black'>
         <button
           type='button'
           className='flex justify-center items-center bg-red-800 text-sm  py-1  px-4 w-full text-white rounded text-sm border-b-2 uppercase font-bold'
@@ -142,7 +122,7 @@ const PersonRow = ({ person }) => {
         </button>
       </td>
     </tr>
-  );
-};
+  )
+}
 
-export default PersonRow;
+export default AppendixTable;

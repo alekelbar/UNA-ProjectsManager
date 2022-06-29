@@ -97,6 +97,7 @@ const Query = {
   getAppendixs: gql`
     query GetAppendixs {
     getAppendixs {
+      id
       description
       owner
       dataUrl
@@ -115,6 +116,59 @@ const Query = {
       }
     }
   }
+  `,
+  getReviews: gql`
+    query GetReviews {
+    getReviews {
+      id
+      report
+      project
+      managers {
+        firstPerson
+        secondPerson
+      }
+      grade
+      admin
+    }
+}
+  `,
+  getManagers: gql`
+    query GetManagers($idF: ID!, $idS: ID!) {
+    getManagers(id_f: $idF, id_s: $idS) {
+      name
+      lastName
+  }
+}
+  `,
+  getProject: gql`
+    query GetProject($getProjectId: ID!) {
+     getProject(id: $getProjectId) {
+     projectName
+  }
+}
+  `,
+  getProjects: gql`
+    query GetProjects {
+   getProjects {
+    projectName
+    id
+  }
+}
+  `,
+  getReview: gql`
+    query GetReview($getReviewId: ID!) {
+  getReview(id: $getReviewId) {
+    id
+    report
+    project
+    managers {
+      secondPerson
+      firstPerson
+    }
+    grade
+    admin
+  }
+}
   `,
 }
 

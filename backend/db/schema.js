@@ -41,6 +41,7 @@ const typeDefs = gql`
 
   "This makes it possible to represent an attachment"
   type Appendix {
+    id: ID
     "This is the description of an attachment"
     description: String
     "This is the owner of the appendix"
@@ -65,6 +66,7 @@ const typeDefs = gql`
   #Review definition
   "This identifies the type of review"
   type Review {
+    id: ID
     "This would be a description of the review"
     report: String
     "Identifier of the project to be evaluated"
@@ -200,6 +202,7 @@ const typeDefs = gql`
   #project definition
   "This identifies the type of the project"
   type Project {
+    id: ID
   "This is the name of the project"
     projectName: String
     "These are the disciplinary areas of the project"
@@ -420,6 +423,9 @@ const typeDefs = gql`
     "Allows to obtain a person from its unique identifier."
     getPerson(id: ID!): Person
 
+    "Get managers"
+    getManagers(id_f: ID!, id_s: ID!): [Person]
+
     getUser: User
 
     #projects
@@ -498,7 +504,7 @@ const typeDefs = gql`
     "Allows you to create revisions"
     createAppendix(input: AppendixInput): Appendix
     "Allows you to update revisions"
-    updateAppendix(id: ID!, input: AppendixInput): Appendix
+    updateAppendix(id: ID!, input: AppendixInput!): Appendix
     "Allows deletion of revisions"
     deleteAppendix(id: ID!): String
   }

@@ -15,7 +15,20 @@ const AddAppendix = () => {
 
   const { data, loading, } = useQuery(Query.getOwners);
 
-  const [createAppendix] = useMutation(Mutation.createAppendix);
+  const [createAppendix] = useMutation(Mutation.createAppendix, {
+    update(cache, { data: { createAppendix } }) {
+      // Obtener la cache de apollo sobre esta consulta...
+      const { getAppendixs } = cache.readQuery({ query: Query.getAppendixs });
+
+      // ajustar la cache sin mutarla...
+      cache.writeQuery({
+        query: Query.getAppendixs,
+        data: {
+          getAppendixs: [...getAppendixs, createAppendix]
+        }
+      });
+    }
+  });
 
   const router = useRouter()
 
@@ -30,6 +43,7 @@ const AddAppendix = () => {
       url: Yup.string().required('Please add your source file'),
       owner: Yup.string().required('The owner is required')
     }),
+
     onSubmit: async values => {
 
       try {
@@ -57,11 +71,12 @@ const AddAppendix = () => {
 
   return (
     <Layout>
+      <h2 className='pt-3 text-2xl text-gray-800 font-light'>Add Appendix</h2>
       {data?.getPeople
         ? <div className='flex justify-center mt-5'>
           <div className='w-full w-full'>
             <form
-              className='items-center flex-wrap bg-white shadow-md px-6 rounded pt-3 pb-2 mb-2 flex justify-between w-full'
+              className='p-5 items-center flex-wrap bg-white shadow-md px-6 rounded pt-3 pb-2 mb-2 flex justify-between w-full'
               onSubmit={formik.handleSubmit}
             >
               {/* // section */}

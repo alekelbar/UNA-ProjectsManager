@@ -40,7 +40,7 @@ const Layout = ({ children }) => {
               style={{ fontFamily: "Merriweather" }}
             >
               <Sidebar />
-              <main className="w-3/4 bg-[#DFF6FF] text-xs sm:min-h-screen">
+              <main className="w-3/4 text-xs sm:min-h-screen">
                 <Header />
                 <div className="flex flex-col justify-center items-center">
                   {children}

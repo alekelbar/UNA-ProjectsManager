@@ -15,9 +15,6 @@ const addPerson = () => {
       // obtener el resto del cache...
       const { getPeople } = cache.readQuery({ query: Query.getPeople });
 
-      console.log("Create person", createPerson);
-      console.log("get people", Query.getPeople);
-
       // ajustar la cache sin mutarla
       cache.writeQuery({
         query: Query.getPeople,
@@ -121,7 +118,7 @@ const addPerson = () => {
 
   return (
     <Layout>
-      <h1 className="text-2xl text-gray-800 font-light">New Person</h1>
+      <h1 className="text-2xl text-gray-800 font-light pt-3">Add Person</h1>
       <div className="flex justify-center mt-5">
         <div className="w-full w-full">
           <form
@@ -394,220 +391,220 @@ const addPerson = () => {
                 />
               </div>
             </form>
-          ) : (
-            <form
-              className="flex-wrap items-center bg-white shadow-md px-8 pt-6 pb-8 mb-4 flex justify-between w-full"
-              onSubmit={formik.handleSubmit}
-            >
-              <div>
-                <h4 className='text-sm text-gray-800 font-light mt-4'>Who are you?</h4>
-                <div className='p-1'>
-                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='name'>
-                    Name
-                  </label>
-                  <input
-                    id="name"
-                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text"
-                    placeholder="Name"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.name}
-                  />
-                  {formik.touched.name && formik.errors.name ? (
-                    <div className="bg-red-100 border-l-1 border-red-500 text-red-700 text-sm">
-                      <p>{formik.errors.name}</p>
-                    </div>
-                  ) : null}
-                </div>
-
-
-                <div className='p-1'>
-                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='lastName'>
-                    lastName
-                  </label>
-                  <input
-                    id="lastName"
-                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type={"text"}
-                    placeholder="lastName"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.lastName}
-                  />
-                  {formik.touched.lastName && formik.errors.lastName ? (
-                    <div className="bg-red-100 border-l-2 bo1der-red-500 text-red-700 text-sm">
-                      <p>{formik.errors.lastName}</p>
-                    </div>
-                  ) : null}
-                </div>
-
-
-                <div className='p-1'>
-                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='dateBirth'>
-                    dateBirth
-                  </label>
-                  <input
-                    id="dateBirth"
-                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type={"date"}
-                    placeholder="dateBirth"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.dateBirth}
-                  />
-                  {formik.touched.dateBirth && formik.errors.dateBirth ? (
-                    <div className="bg-red-100 border-l-2 bor1er-red-500 text-red-700 text-sm">
-                      <p>{formik.errors.dateBirth}</p>
-                    </div>
-                  ) : null}
-                </div>
-
-
-                <div className='p-1'>
-                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='nacionality'>
-                    Nacionality
-                  </label>
-                  <input
-                    id="nacionality"
-                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type={"text"}
-                    placeholder="Nacionality"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.nacionality}
-                  />
-                  {formik.touched.nacionality && formik.errors.nacionality ? (
-                    <div className="bg-red-100 border-l-2 borde1-red-500 text-red-700 text-sm">
-                      <p>{formik.errors.nacionality}</p>
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-
-              <div>
-
-                <h4 className='text-sm text-gray-800 font-light mt-4'>Address</h4>
-
-                <div className='p-1'>
-                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='city'>
-                    City
-                  </label>
-                  <input
-                    id="city"
-                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type={"text"}
-                    placeholder="City"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.city}
-                  />
-                  {formik.touched.city && formik.errors.city ? (
-                    <div className="bg-red-100 border-l-1 border-red-500 text-red-700 text-sm">
-                      <p>{formik.errors.city}</p>
-                    </div>
-                  ) : null}
-                </div>
-
-
-                <div className='p-1'>
-                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='village'>
-                    Village
-                  </label>
-                  <input
-                    id="village"
-                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type={"text"}
-                    placeholder="Village"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.village}
-                  />
-                  {formik.touched.village && formik.errors.village ? (
-                    <div className="bg-red-100 border-l-2 b1rder-red-500 text-red-700 text-sm">
-                      <p>{formik.errors.village}</p>
-                    </div>
-                  ) : null}
-                </div>
-
-
-                <div className='p-1'>
-                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='description'>
-                    Description
-                  </label>
-                  <input
-                    id="description"
-                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type={"text"}
-                    placeholder="Description"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.description}
-                  />
-                  {formik.touched.description && formik.errors.description ? (
-                    <div className="bg-red-100 border-l-2 borde1-red-500 text-red-700 text-sm">
-                      <p>{formik.errors.description}</p>
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-
-              <div>
-                <h4 className='text-sm text-gray-800 font-light mt-4'>Contact</h4>
-
-
-                <div className='p-1'>
-                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='phone'>
-                    Phone
-                  </label>
-                  <input
-                    id="phone"
-                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type={"tel"}
-                    placeholder="Phone"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.phone}
-                  />
-                  {formik.touched.phone && formik.errors.phone ? (
-                    <div className="bg-red-100 border-l-21border-red-500 text-red-700 text-sm">
-                      <p>{formik.errors.phone}</p>
-                    </div>
-                  ) : null}
-                </div>
-
-
-
-                <div className='p-1'>
-                  <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='email'>
-                    Unique Email
-                  </label>
-                  <input
-                    id="email"
-                    className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type={"Email"}
-                    placeholder="Email"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.email}
-                  />
-                </div>
-
-                {formik.touched.email && formik.errors.email ? (
-                  <div className="bg-red-100 border-l-21border-red-500 text-red-700 text-sm">
-                    <p>{formik.errors.email}</p>
+            : (
+              <form
+                className="flex-wrap items-center bg-white shadow-md px-8 pt-6 pb-8 mb-4 flex justify-between w-full"
+                onSubmit={formik.handleSubmit}
+              >
+                <div>
+                  <h4 className='text-sm text-gray-800 font-light mt-4'>Who are you?</h4>
+                  <div className='p-1'>
+                    <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='name'>
+                      Name
+                    </label>
+                    <input
+                      id="name"
+                      className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      type="text"
+                      placeholder="Name"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.name}
+                    />
+                    {formik.touched.name && formik.errors.name ? (
+                      <div className="bg-red-100 border-l-1 border-red-500 text-red-700 text-sm">
+                        <p>{formik.errors.name}</p>
+                      </div>
+                    ) : null}
                   </div>
-                ) : null}
-              </div>
-              <div className="w-full">
-                <input
-                  type={'submit'}
-                  className='bg-cyan-500 w-full mt-1 p-2 text-white uppercas hover:bg-gray-900 font-thin'
-                  value={'Add'}
-                />
-              </div>
-            </form>
-          )}
+
+
+                  <div className='p-1'>
+                    <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='lastName'>
+                      lastName
+                    </label>
+                    <input
+                      id="lastName"
+                      className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      type={"text"}
+                      placeholder="lastName"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.lastName}
+                    />
+                    {formik.touched.lastName && formik.errors.lastName ? (
+                      <div className="bg-red-100 border-l-2 bo1der-red-500 text-red-700 text-sm">
+                        <p>{formik.errors.lastName}</p>
+                      </div>
+                    ) : null}
+                  </div>
+
+
+                  <div className='p-1'>
+                    <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='dateBirth'>
+                      dateBirth
+                    </label>
+                    <input
+                      id="dateBirth"
+                      className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      type={"date"}
+                      placeholder="dateBirth"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.dateBirth}
+                    />
+                    {formik.touched.dateBirth && formik.errors.dateBirth ? (
+                      <div className="bg-red-100 border-l-2 bor1er-red-500 text-red-700 text-sm">
+                        <p>{formik.errors.dateBirth}</p>
+                      </div>
+                    ) : null}
+                  </div>
+
+
+                  <div className='p-1'>
+                    <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='nacionality'>
+                      Nacionality
+                    </label>
+                    <input
+                      id="nacionality"
+                      className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      type={"text"}
+                      placeholder="Nacionality"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.nacionality}
+                    />
+                    {formik.touched.nacionality && formik.errors.nacionality ? (
+                      <div className="bg-red-100 border-l-2 borde1-red-500 text-red-700 text-sm">
+                        <p>{formik.errors.nacionality}</p>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+
+                <div>
+
+                  <h4 className='text-sm text-gray-800 font-light mt-4'>Address</h4>
+
+                  <div className='p-1'>
+                    <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='city'>
+                      City
+                    </label>
+                    <input
+                      id="city"
+                      className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      type={"text"}
+                      placeholder="City"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.city}
+                    />
+                    {formik.touched.city && formik.errors.city ? (
+                      <div className="bg-red-100 border-l-1 border-red-500 text-red-700 text-sm">
+                        <p>{formik.errors.city}</p>
+                      </div>
+                    ) : null}
+                  </div>
+
+
+                  <div className='p-1'>
+                    <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='village'>
+                      Village
+                    </label>
+                    <input
+                      id="village"
+                      className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      type={"text"}
+                      placeholder="Village"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.village}
+                    />
+                    {formik.touched.village && formik.errors.village ? (
+                      <div className="bg-red-100 border-l-2 b1rder-red-500 text-red-700 text-sm">
+                        <p>{formik.errors.village}</p>
+                      </div>
+                    ) : null}
+                  </div>
+
+
+                  <div className='p-1'>
+                    <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='description'>
+                      Description
+                    </label>
+                    <input
+                      id="description"
+                      className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      type={"text"}
+                      placeholder="Description"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.description}
+                    />
+                    {formik.touched.description && formik.errors.description ? (
+                      <div className="bg-red-100 border-l-2 borde1-red-500 text-red-700 text-sm">
+                        <p>{formik.errors.description}</p>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className='text-sm text-gray-800 font-light mt-4'>Contact</h4>
+
+
+                  <div className='p-1'>
+                    <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='phone'>
+                      Phone
+                    </label>
+                    <input
+                      id="phone"
+                      className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      type={"tel"}
+                      placeholder="Phone"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.phone}
+                    />
+                    {formik.touched.phone && formik.errors.phone ? (
+                      <div className="bg-red-100 border-l-21border-red-500 text-red-700 text-sm">
+                        <p>{formik.errors.phone}</p>
+                      </div>
+                    ) : null}
+                  </div>
+
+
+
+                  <div className='p-1'>
+                    <label className='block text-gray-700 text-xs font-bold mb-2' htmlFor='email'>
+                      Unique Email
+                    </label>
+                    <input
+                      id="email"
+                      className="shadow appearence-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      type={"Email"}
+                      placeholder="Email"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.email}
+                    />
+                  </div>
+
+                  {formik.touched.email && formik.errors.email ? (
+                    <div className="bg-red-100 border-l-21border-red-500 text-red-700 text-sm">
+                      <p>{formik.errors.email}</p>
+                    </div>
+                  ) : null}
+                </div>
+                <div className="w-full">
+                  <input
+                    type={'submit'}
+                    className='bg-cyan-500 w-full mt-1 p-2 text-white uppercas hover:bg-gray-900 font-thin'
+                    value={'Add'}
+                  />
+                </div>
+              </form>
+            )}
         </div>
       </div>
     </Layout>

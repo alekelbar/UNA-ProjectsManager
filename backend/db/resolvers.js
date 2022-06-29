@@ -31,12 +31,12 @@ const resolvers = {
     },
     getProject: async (_, { id }) => {
       // check if the person already exists
-      const review = await Review.findById(id);
-      if (!review)
+      const project = await Project.findById(id);
+      if (!project)
         throw new Error(
           "It does not exist or does not have permissions on it."
         );
-      return review;
+      return project;
     },
     getTeam: async (_, { id }) => {
       // check if the person already exists
@@ -81,8 +81,15 @@ const resolvers = {
     getReviews: async (_, __, ctx) => {
       return await Review.find({ admin: ctx.user.id });
     },
-    getUser: async (_, {}, ctx) => {
+    getUser: async (_, { }, ctx) => {
       return ctx.user;
+    },
+    getManagers: async (_, { id_f, id_s }) => {
+      const manager_f = await Person.findById(id_f);
+      const manager_s = await Person.findById(id_s);
+
+      if (!manager_f || !manager_s) throw new Error('That people does not exists');
+      return [manager_f, manager_s];
     },
   },
   Mutation: {
@@ -192,7 +199,7 @@ const resolvers = {
         input.admin = ctx.user.id;
         const team = new Team(input);
         return await team.save(); // save to database
-      } catch (e) {}
+      } catch (e) { }
     },
     updateTeam: async (_, { id, input }, ctx) => {
       const team = await Team.findOne({ id, admin: ctx.user.id });
@@ -249,8 +256,8 @@ const resolvers = {
         console.warn("An error occurred while saving", e);
       }
     },
-    updateAppendix: async (_, { input }, ctx) => {
-      const appendix = await Appendix.findOne({ id, admin: ctx.user.id });
+    updateAppendix: async (_, { id, input }, ctx) => {
+      const appendix = await Appendix.findOne({ _id: id, admin: ctx.user.id });
       if (!appendix)
         throw new Error(
           "It does not exist or does not have permissions on it."
